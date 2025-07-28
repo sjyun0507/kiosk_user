@@ -7,10 +7,7 @@ import com.cafe_kiosk.kiosk_user.service.MainService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,12 +15,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/menus")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MenuController {
     private final MainService mainService;
 
     @Operation(summary = "카테고리")
     @GetMapping(value = "/")
     public List<CategoryDTO> getCategories() {
+        log.info("getCategories");
         List<CategoryDTO> categories = mainService.getAllCategories();
         return categories;
     }
@@ -34,6 +33,15 @@ public class MenuController {
         List<MenuDTO> menuDTOS = mainService.getMenusByCategory(category_id);
 
         return menuDTOS;
+    }
+
+    @Operation(summary= "모든 메뉴")
+    @GetMapping(value="/all")
+    public List<MenuDTO> findAll() {
+        log.info("findAll");
+        List<MenuDTO> all = mainService.allMenus();
+        return all;
+
     }
 
     @Operation(summary = "메뉴 상세옵션")
