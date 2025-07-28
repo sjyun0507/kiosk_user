@@ -24,6 +24,14 @@ public class MainServiceImpl implements MainService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
 
+    @Override
+    public List<MenuDTO> allMenus() {
+        return menuRepository.findAll()
+                .stream()
+                .map(MenuDTO::entityToDto)
+                .collect(Collectors.toList());
+    }
+
     // 1. 카테고리 전체 조회
     @Override
     public List<CategoryDTO> getAllCategories() {
