@@ -5,6 +5,7 @@ import com.cafe_kiosk.kiosk_user.dto.*;
 import java.util.List;
 
 public interface MainService {
+    List<MenuDTO> allMenus();
     List<CategoryDTO> getAllCategories();
     List<MenuDTO> getMenusByCategory(Long categoryId);
     MenuDTO getMenu(Long menuId);

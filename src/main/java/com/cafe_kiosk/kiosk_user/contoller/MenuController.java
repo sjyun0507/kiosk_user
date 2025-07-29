@@ -16,12 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")  // React 앱 주소 허용
 @RequestMapping("/api/menus")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MenuController {
     private final MainService mainService;
 
     @Operation(summary = "카테고리")
     @GetMapping(value = "/")
     public List<CategoryDTO> getCategories() {
+        log.info("getCategories");
         List<CategoryDTO> categories = mainService.getAllCategories();
         return categories;
     }
@@ -34,11 +36,15 @@ public class MenuController {
         return menuDTOS;
     }
 
-    @Operation(summary = "모든 메뉴")
-    @GetMapping(value = "/all")
-    public List<MenuDTO> getAllMenus() {
-        List<MenuDTO> menuDTOS = mainService.allMenus();
-        return menuDTOS;
+
+
+    @Operation(summary= "모든 메뉴")
+    @GetMapping(value="/all")
+    public List<MenuDTO> findAll() {
+        log.info("findAll");
+        List<MenuDTO> all = mainService.allMenus();
+        return all;
+
     }
 
     @Operation(summary = "메뉴 상세옵션")
