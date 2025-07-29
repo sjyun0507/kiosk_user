@@ -23,6 +23,7 @@ public class MainServiceImpl implements MainService {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<MenuDTO> allMenus() {
@@ -61,51 +62,50 @@ public class MainServiceImpl implements MainService {
     // 4. 메뉴 옵션 조회
     @Override
     public List<MenuOptionDTO> getOptions(Long menuId) {
-        return menuOptionRepository.findByMenu_MenuId(menuId)
+        return menuOptionRepository.findByCategory_CategoryId(menuId)
                 .stream()
                 .map(MenuOptionDTO::entityToDto)
                 .collect(Collectors.toList());
     }
 
-//     5. 장바구니 아이템 추가
+    //     5. 장바구니 아이템 추가
     @Transactional
     public CartDTO addToCart(AddCartRequest request) {
-        // 메뉴 조회
         Menu menu = menuRepository.findById(request.getMenuId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
+                .orElseThrow(() -> new RuntimeException("메뉴를 찾을 수 없습니다. ID: " + request.getMenuId()));
 
-        // 옵션 조회 (nullable)
-        MenuOption option = null;
-        if (request.getOptionId() != null) {
-            option = menuOptionRepository.findById(request.getOptionId())
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 옵션입니다."));
+        if (request.getQuantity() <= 0) {
+            throw new IllegalArgumentException("수량은 1 이상이어야 합니다.");
         }
 
-        // 중복 항목 검사
-        Cart cartItem = cartRepository.findByPhoneAndMenu_MenuIdAndOption_OptionId(
-                        request.getPhone(), request.getMenuId(), request.getOptionId())
-                .orElse(null);
+        Cart cart = new Cart();
+        cart.setMenu(menu);
+        cart.setOptions(request.getOptions());  // 배열 그대로 세팅
+        cart.setQuantity(request.getQuantity());
+        cartRepository.save(cart);
 
-        if (cartItem != null) {
-            // 이미 있으면 수량 증가
-            cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
-            cartRepository.save(cartItem);
-        } else {
-            // 새로 생성
-            cartItem = Cart.builder()
-                    .phone(request.getPhone())
-                    .menu(menu)
-                    .option(option)
-                    .quantity((long) request.getQuantity())
-                    .build();
-            cartRepository.save(cartItem);
-        }
-        return CartDTO.entityToDto(cartItem);
+        CartDTO dto = new CartDTO();
+        dto.setCartId(cart.getCartId());
+        dto.setOptions((cart.getOptions()));  // String[]
+        dto.setQuantity(cart.getQuantity());
+
+        return dto;
+    }
+
+
+
+    @Override
+    public UserDTO getUser(String phone) {
+        User user = userRepository.findByPhone(phone);
+        return UserDTO.entityToDto(user);
     }
 
     @Override
-    public UserDTO getUser(Long userId) {
-        return null;
+    public List<MenuDTO> allMenus() {
+            return menuRepository.findAll()
+                    .stream()
+                    .map(MenuDTO::entityToDto)
+                    .collect(Collectors.toList());
     }
 
     // 6. 장바구니 아이템 리스트 조회

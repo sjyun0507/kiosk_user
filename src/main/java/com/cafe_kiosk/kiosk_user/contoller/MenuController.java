@@ -14,6 +14,7 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")  // React 앱 주소 허용
 @RequestMapping("/api/menus")
 @CrossOrigin(origins = "http://localhost:5173")
 public class MenuController {
@@ -34,6 +35,8 @@ public class MenuController {
 
         return menuDTOS;
     }
+
+
 
     @Operation(summary= "모든 메뉴")
     @GetMapping(value="/all")

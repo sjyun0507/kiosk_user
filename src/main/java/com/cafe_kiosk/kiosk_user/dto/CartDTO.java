@@ -18,6 +18,7 @@ public class CartDTO extends BaseEntityDTO {
     private String phone;
     private MenuDTO menu;
     private MenuOptionDTO option;
+    private String[] options;
     private Long quantity = 1L;
 
     // 엔티티 → DTO

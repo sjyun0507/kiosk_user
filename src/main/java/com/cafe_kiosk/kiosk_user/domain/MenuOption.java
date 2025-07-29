@@ -19,8 +19,8 @@ public class MenuOption {
     private Long optionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menuId", nullable = false)
-    private Menu menu;
+    @JoinColumn(name = "categoryId", nullable = false)
+    private Category category;
 
     @Column(nullable = false, length = 100)
     private String optionName;

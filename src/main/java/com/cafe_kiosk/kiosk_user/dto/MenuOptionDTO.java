@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class MenuOptionDTO {
 
     private Long optionId;
-    private MenuDTO menu;
+    private CategoryDTO category;
     private String optionName;
     private Long optionPrice = 0L;
     private String optionType;
@@ -22,7 +22,7 @@ public class MenuOptionDTO {
     public static MenuOptionDTO entityToDto(MenuOption menuOption) {
         return MenuOptionDTO.builder()
                 .optionId(menuOption.getOptionId())
-                .menu(MenuDTO.entityToDto(menuOption.getMenu()))
+                .category(CategoryDTO.entityToDto(menuOption.getCategory()))
                 .optionName(menuOption.getOptionName())
                 .optionPrice(menuOption.getOptionPrice())
                 .optionType(menuOption.getOptionType())
@@ -33,7 +33,7 @@ public class MenuOptionDTO {
     public MenuOption dtoToEntity() {
         return MenuOption.builder()
                 .optionId(optionId)
-                .menu(menu.dtoToEntity())
+                .category(category.dtoToEntity())
                 .optionName(optionName)
                 .optionPrice(optionPrice)
                 .optionType(optionType)

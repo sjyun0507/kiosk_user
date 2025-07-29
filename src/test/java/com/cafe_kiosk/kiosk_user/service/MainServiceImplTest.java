@@ -2,12 +2,14 @@ package com.cafe_kiosk.kiosk_user.service;
 
 import com.cafe_kiosk.kiosk_user.dto.*;
 import com.cafe_kiosk.kiosk_user.repository.CartRepository;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+@Log4j2
 @SpringBootTest
 class MainServiceImplTest {
     @Autowired
@@ -34,26 +36,29 @@ class MainServiceImplTest {
     }
     @Test
     void getOptionsForMenu() {
-        Long menuId = 1L; // 실제 존재하는 메뉴 ID
-        List<MenuOptionDTO> options = mainService.getOptions(menuId);
+        Long categoryId = 1L; // 실제 존재하는 메뉴 ID
+        List<MenuOptionDTO> options = mainService.getOptions(categoryId);
         options.forEach(System.out::println);
     }
 
     @Test
     void addToCartTest() {
-        AddCartRequest request = new AddCartRequest();
-//        request.setPhone("01012345678");
-        request.setMenuId(1L);       // 실제 존재하는 메뉴 ID로 변경하세요
-        request.setOptionId(null);   // 옵션 없을 때 null, 옵션 있을 땐 값 넣기
-        request.setQuantity(2);
+            AddCartRequest request = new AddCartRequest();
+            request.setMenuId(3L);
+            request.setQuantity(1L);
 
-        // 1) 새 아이템 추가
-        CartDTO firstAdd = mainService.addToCart(request);
-        System.out.println("첫 추가: " + firstAdd);
+            // 1. 옵션 없는 경우
+            request.setOptions(null); // 또는 new String[0]
+            CartDTO noOptionAdd = mainService.addToCart(request);
+            System.out.println("옵션 없음 추가: " + noOptionAdd);
 
-        // 2) 같은 아이템 다시 추가 (수량 증가 기대)
-        CartDTO secondAdd = mainService.addToCart(request);
-        System.out.println("두 번째 추가: " + secondAdd);
+            // 2. 옵션이 있는 경우
+            request.setOptions("1,2");
+            request.setQuantity(2L);
+
+            // 이 부분도 List<CartDTO>로 바꾸는 게 적절
+            CartDTO withOptionAdd = mainService.addToCart(request);
+            System.out.println("옵션 있음 추가: " + withOptionAdd);
     }
 
     @Test
@@ -77,5 +82,11 @@ class MainServiceImplTest {
     void getOrdersTest() {
         Long orderId = 1L;
         OrdersDTO ordersDTO = mainService.getOrder(orderId);
+    }
+
+    @Test
+    void getUsersTest() {
+        String phone = "01011112222";
+        log.info(mainService.getUser(phone));
     }
 }
