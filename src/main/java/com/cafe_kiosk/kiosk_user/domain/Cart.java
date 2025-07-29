@@ -29,6 +29,23 @@ public class Cart extends BaseEntity {
     @JoinColumn(name = "optionId")
     private MenuOption option;
 
+    private String options;
+
+    public String[] getOptions() {
+        if (options == null || options.isEmpty()) {
+            return new String[0];
+        }
+        return options.split(",");
+    }
+
+    public void setOptions(String[] optionsArray) {
+        if (optionsArray == null || optionsArray.length == 0) {
+            this.options = "";
+        } else {
+            this.options = String.join(",", optionsArray);
+        }
+    }
+
     @Column(nullable = false)
     private Long quantity = 1L;
 }

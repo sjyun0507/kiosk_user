@@ -7,16 +7,14 @@ import com.cafe_kiosk.kiosk_user.service.MainService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Log4j2
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")  // React 앱 주소 허용
 @RequestMapping("/api/menus")
 public class MenuController {
     private final MainService mainService;
@@ -33,6 +31,13 @@ public class MenuController {
     public List<MenuDTO> findByCategory(@PathVariable Long category_id) {
         List<MenuDTO> menuDTOS = mainService.getMenusByCategory(category_id);
 
+        return menuDTOS;
+    }
+
+    @Operation(summary = "모든 메뉴")
+    @GetMapping(value = "/all")
+    public List<MenuDTO> getAllMenus() {
+        List<MenuDTO> menuDTOS = mainService.allMenus();
         return menuDTOS;
     }
 

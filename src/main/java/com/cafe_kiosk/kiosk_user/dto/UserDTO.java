@@ -33,4 +33,5 @@ public class UserDTO extends BaseEntityDTO {
                 .points(points)
                 .build();
     }
+
 }
