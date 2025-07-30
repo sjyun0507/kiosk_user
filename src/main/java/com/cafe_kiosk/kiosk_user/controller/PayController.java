@@ -10,6 +10,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
@@ -36,24 +37,53 @@ public class PayController {
     @Value("${com.tjfgusdh.toss.widgetSecretKey}")
     private String widgetSecretKey;
 
-    @GetMapping("/order/{orderId}")
-    public ResponseEntity<?> getOrderInfo(@PathVariable Long orderId) {
-        OrdersDTO order = orderService.getOrder(orderId);
-        return ResponseEntity.ok(order);
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/pay/checkout";
+
     }
+
+    @GetMapping("/checkout")
+    public void checkout(Model model) {
+        log.info("checkout()...");
+
+        //주문 ID 생성
+        String orderId = orderService.getOrderId();
+        log.info("orderId: {}", orderId);
+
+        //주문 정보 가져오기
+        String orderDTO = orderService.getOrderId();
+        model.addAttribute("order", orderDTO);
+        model.addAttribute("widgetClientKey", widgetClientKey);
+
+    }
+
+//    @GetMapping("/pay/success")
+//    public void success(){
+//        log.info("success()...");
+//    }
+//
+//    @GetMapping("/pay/fail")
+//    public void fail(){
+//        log.info("fail()...");
+//    }
 
     @PostMapping("/confirm")
     public ResponseEntity<JSONObject> confirm(@RequestBody String jsonBody) throws Exception {
         JSONParser parser = new JSONParser();
-        Long orderId;
+        String tossOrderId;
         String amount;
         String paymentKey;
+        Long orderId;
 
         try {
             JSONObject requestData = (JSONObject) parser.parse(jsonBody);
             paymentKey = (String) requestData.get("paymentKey");
-            orderId = (Long) requestData.get("orderId");
+            tossOrderId = (String) requestData.get("orderId"); //// Toss 기준 orderId (문자열)
             amount = (String) requestData.get("amount");
+
+            // tossOrderId → 내부 DB의 Long 타입 orderId 조회
+            orderId = orderService.getOrderIdByTossOrderId(tossOrderId);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

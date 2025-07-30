@@ -22,6 +22,9 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
+    @Column(unique = true)
+    private String tossOrderId; //주문 번호(Toss 에 넘기는 고유 문자열 ID)
+
     @Column(length = 20)
     private String phone;
 

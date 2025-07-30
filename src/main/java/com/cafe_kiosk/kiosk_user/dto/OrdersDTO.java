@@ -2,10 +2,7 @@ package com.cafe_kiosk.kiosk_user.dto;
 
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
 import com.cafe_kiosk.kiosk_user.domain.Orders;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,9 +10,11 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class OrdersDTO {
-
-    private Long orderId;
+    private Long orderId; //주문 번호(프라이머리키)
+    private String tossOrderId; //주문 번호(Toss 에 넘기는 고유 문자열 ID)
     private String phone;
     private LocalDateTime orderTime;
     private Long totalAmount;
@@ -30,6 +29,7 @@ public class OrdersDTO {
     public static OrdersDTO entityToDto(Orders orders) {
         return OrdersDTO.builder()
                 .orderId(orders.getOrderId())
+                .tossOrderId(orders.getTossOrderId())
                 .phone(orders.getPhone())
                 .orderTime(orders.getOrderTime())
                 .totalAmount(orders.getTotalAmount())
@@ -45,6 +45,7 @@ public class OrdersDTO {
     public Orders dtoToEntity() {
         return Orders.builder()
                 .orderId(orderId)
+                .tossOrderId(tossOrderId)
                 .phone(phone)
                 .orderTime(orderTime)
                 .totalAmount(totalAmount)
