@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -30,7 +32,7 @@ public class Orders {
     private Long totalAmount;
 
     @Column(nullable = false, length = 50)
-    private String status;
+    private String status; // ORDERED, COMPLETED, CANCELED 등
 
     private Long usedPoint = 0L;
 
@@ -38,4 +40,7 @@ public class Orders {
 
     @Column(nullable = false, length = 20)
     private String orderMethod;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>(); //OrderItem 과의 관계도 설정
 }

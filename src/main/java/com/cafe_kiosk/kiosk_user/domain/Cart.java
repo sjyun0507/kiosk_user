@@ -48,4 +48,6 @@ public class Cart extends BaseEntity {
 
     @Column(nullable = false)
     private Long quantity = 1L;
+
+    private String sessionId; //추가
 }

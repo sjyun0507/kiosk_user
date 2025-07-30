@@ -14,10 +14,10 @@ public interface MainService {
     void updateCartQuantity(Long cartItemId, Long newQuantity);
     void removeCartItem(Long cartItemId);
     void clearCart(); // 주문 완료 후
-//  OrdersDTO placeOrder(OrderRequest request);
+//    OrdersDTO placeOrder(OrderRequest request);
     OrdersDTO getOrder(Long orderId);
     CartDTO addToCart(AddCartRequest request);
     UserDTO getUser(String phone);
-    List<MenuDTO> allMenus();
+
 
 }
