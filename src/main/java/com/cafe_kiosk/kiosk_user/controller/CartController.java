@@ -2,6 +2,7 @@ package com.cafe_kiosk.kiosk_user.controller;
 
 import com.cafe_kiosk.kiosk_user.dto.AddCartRequest;
 import com.cafe_kiosk.kiosk_user.dto.CartDTO;
+import com.cafe_kiosk.kiosk_user.repository.CartRepository;
 import com.cafe_kiosk.kiosk_user.service.MainService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:5173")
 public class CartController {
     private final MainService mainService;
+    private final CartRepository cartRepository;
 
     @Operation(summary = "장바구니담기")
     @PostMapping(value="/")
@@ -24,5 +26,11 @@ public class CartController {
         log.info("Session ID: {}", cart.getSessionId());
         CartDTO result = mainService.addToCart(cart); // 결과 받아오기
         return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/{sessionId}")
+    public ResponseEntity<CartDTO> deleteCart(@PathVariable String sessionId) {
+        cartRepository.deleteBySessionId(sessionId);
+        return ResponseEntity.ok(new CartDTO());
     }
 }

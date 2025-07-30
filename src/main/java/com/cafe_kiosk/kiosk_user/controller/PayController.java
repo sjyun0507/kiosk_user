@@ -92,7 +92,7 @@ public class PayController {
 //         결제 승인 성공시 DB 반영
         if (code == 200) {
             orderService.modifyPaymentKey(orderId, paymentKey);
-            orderService.modifyOrderStatus(orderId, OrderStatus.payReceive);
+            orderService.modifyOrderStatus(orderId, OrderStatus.COMPLETE);
         }
 
         return ResponseEntity.status(code).body(jsonObject);

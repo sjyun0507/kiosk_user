@@ -31,8 +31,9 @@ public class Orders {
     @Column(nullable = false)
     private Long totalAmount;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
-    private String status; // ORDERED, COMPLETED, CANCELED 등
+    private OrderStatus orderStatus;
 
     private Long usedPoint = 0L;
 

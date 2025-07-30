@@ -3,13 +3,22 @@ package com.cafe_kiosk.kiosk_user.repository;
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
 import com.cafe_kiosk.kiosk_user.domain.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
 
 public interface OrderRepository extends JpaRepository<Orders, Long> {
-//    void insert(Orders orders);
-//    Orders selectByOrderId(String orderId);
-//    토스의 주문가 저장
-    void updatePaymentKey(Long orderId, String paymentKey);
-//    주문 상태 변경
-    void updateOrderStatus(Long orderId, OrderStatus orderStatus);
+    // 주문 상태 변경, 결제키 업데이트는 직접 쿼리로 처리
+    @Modifying
+    @Transactional
+    @Query("UPDATE Orders o SET o.paymentKey = :paymentKey WHERE o.orderId = :orderId")
+    void updatePaymentKey(@Param("orderId") Long orderId, @Param("paymentKey") String paymentKey);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Orders o SET o.orderStatus = :orderStatus WHERE o.orderId = :orderId")
+    void updateOrderStatus(@Param("orderId") Long orderId, @Param("orderStatus") OrderStatus orderStatus);
     Orders findByOrderId(Long orderId);
 }
