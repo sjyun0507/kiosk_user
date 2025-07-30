@@ -22,6 +22,8 @@ public class OrdersDTO {
     private Long usedPoint = 0L;
     private Long earnedPoint = 0L;
     private String orderMethod;
+    private String paymentKey;
+
 
     // Entity → DTO
     public static OrdersDTO entityToDto(Orders orders) {
@@ -34,6 +36,7 @@ public class OrdersDTO {
                 .usedPoint(orders.getUsedPoint())
                 .earnedPoint(orders.getEarnedPoint())
                 .orderMethod(orders.getOrderMethod())
+                .paymentKey(orders.getPaymentKey())
                 .build();
     }
 
@@ -48,6 +51,7 @@ public class OrdersDTO {
                 .usedPoint(usedPoint)
                 .earnedPoint(earnedPoint)
                 .orderMethod(orderMethod)
+                .paymentKey(paymentKey)
                 .build();
     }
 }

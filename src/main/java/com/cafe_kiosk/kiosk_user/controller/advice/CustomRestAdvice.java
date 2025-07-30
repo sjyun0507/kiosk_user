@@ -1,4 +1,4 @@
-package com.cafe_kiosk.kiosk_user.contoller.advice;
+package com.cafe_kiosk.kiosk_user.controller.advice;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;

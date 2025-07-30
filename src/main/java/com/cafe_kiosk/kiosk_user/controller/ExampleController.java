@@ -1,4 +1,4 @@
-package com.cafe_kiosk.kiosk_user.contoller;
+package com.cafe_kiosk.kiosk_user.controller;
 
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
