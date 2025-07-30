@@ -95,6 +95,15 @@ public class MainServiceImpl implements MainService {
         return dto;
     }
 
+//    public UserDTO findOrCreateUserByPhone(String phone) {
+//        return userRepository.findByPhone(phone)
+//                .orElseGet(() -> {
+//                    User newUser = new User();
+//                    newUser.setPhone(phone);
+//                    newUser.setPoints(0L);
+//                    return userRepository.save(newUser);
+//                });
+//    }
 
 
     @Override
@@ -102,6 +111,8 @@ public class MainServiceImpl implements MainService {
         User user = userRepository.findByPhone(phone);
         return UserDTO.entityToDto(user);
     }
+
+
 
 
     // 6. 장바구니 아이템 리스트 조회
@@ -112,8 +123,9 @@ public class MainServiceImpl implements MainService {
                 .map(CartDTO::entityToDto)
                 .collect(Collectors.toList());
     }
+    public void setUser(String phone) {
 
-
+    }
 
     // 7. 장바구니 아이템 수량 변경
 //    @Transactional

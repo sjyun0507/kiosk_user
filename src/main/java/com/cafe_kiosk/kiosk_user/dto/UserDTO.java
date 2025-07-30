@@ -16,6 +16,10 @@ public class UserDTO extends BaseEntityDTO {
     private String phone;
     private Long points = 0L;
 
+    public void setUser(String phone) {
+        this.phone = phone;
+        this.points = 0L;
+    }
     // Entity → DTO
     public static UserDTO entityToDto(User user) {
         return UserDTO.builder()

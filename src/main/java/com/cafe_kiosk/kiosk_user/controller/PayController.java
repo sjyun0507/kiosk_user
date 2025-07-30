@@ -1,7 +1,11 @@
 package com.cafe_kiosk.kiosk_user.controller;
 
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
+import com.cafe_kiosk.kiosk_user.domain.User;
 import com.cafe_kiosk.kiosk_user.dto.OrdersDTO;
+import com.cafe_kiosk.kiosk_user.dto.UserDTO;
+import com.cafe_kiosk.kiosk_user.repository.CartRepository;
+import com.cafe_kiosk.kiosk_user.service.MainService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +33,7 @@ import java.util.Base64;
 public class PayController {
 
     private final OrderService orderService;
-
+    private final MainService mainService;
     @Value("${com.tjfgusdh.toss.widgetClientKey}")
     private String widgetClientKey;
 
@@ -48,17 +52,23 @@ public class PayController {
         Long orderId;
         String amount;
         String paymentKey;
-
+        String phone;
         try {
             JSONObject requestData = (JSONObject) parser.parse(jsonBody);
             paymentKey = (String) requestData.get("paymentKey");
             orderId = (Long) requestData.get("orderId");
             amount = (String) requestData.get("amount");
+            phone = (String) requestData.get("phone");
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
-        if (orderService.getOrder(orderId).getTotalAmount() != Integer.parseInt(amount)) {
+
+        long total = mainService.getCartItems().stream()
+                .mapToLong(cartItem -> cartItem.getMenu().getPrice())
+                .sum();
+
+        if (total != Integer.parseInt(amount)) {
             JSONObject response = new JSONObject();
             response.put("message", "결제 금액 위조");
             return ResponseEntity.status(400).body(response);
@@ -92,7 +102,7 @@ public class PayController {
 //         결제 승인 성공시 DB 반영
         if (code == 200) {
             orderService.modifyPaymentKey(orderId, paymentKey);
-            orderService.modifyOrderStatus(orderId, OrderStatus.payReceive);
+            orderService.modifyOrderStatus(orderId, OrderStatus.COMPLETE);
         }
 
         return ResponseEntity.status(code).body(jsonObject);
