@@ -1,4 +1,4 @@
-package com.cafe_kiosk.kiosk_user.contoller;
+package com.cafe_kiosk.kiosk_user.controller;
 
 import com.cafe_kiosk.kiosk_user.dto.AddCartRequest;
 import com.cafe_kiosk.kiosk_user.dto.CartDTO;
