@@ -53,7 +53,8 @@ class MainServiceImplTest {
             System.out.println("옵션 없음 추가: " + noOptionAdd);
 
             // 2. 옵션이 있는 경우
-            request.setOptions("1,2");
+        String[] options = {"1","2"};
+            request.setOptions(options);
             request.setQuantity(2L);
 
             // 이 부분도 List<CartDTO>로 바꾸는 게 적절

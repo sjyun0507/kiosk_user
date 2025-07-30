@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173")  // React 앱 주소 허용
 @RequestMapping("/api/menus")
-@CrossOrigin(origins = "http://localhost:5173")
 public class MenuController {
     private final MainService mainService;
 

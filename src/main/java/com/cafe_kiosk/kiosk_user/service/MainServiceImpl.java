@@ -68,7 +68,7 @@ public class MainServiceImpl implements MainService {
                 .collect(Collectors.toList());
     }
 
-    //     5. 장바구니 아이템 추가
+    //5. 장바구니 아이템 추가
     @Transactional
     public CartDTO addToCart(AddCartRequest request) {
         Menu menu = menuRepository.findById(request.getMenuId())
@@ -79,14 +79,17 @@ public class MainServiceImpl implements MainService {
         }
 
         Cart cart = new Cart();
+        cart.setSessionId(request.getSessionId()); // 추가: sessionId 저장
         cart.setMenu(menu);
-        cart.setOptions(request.getOptions());  // 배열 그대로 세팅
+        cart.setOptions(request.getOptions());  // String[] 배열 그대로 세팅
         cart.setQuantity(request.getQuantity());
         cartRepository.save(cart);
 
         CartDTO dto = new CartDTO();
         dto.setCartId(cart.getCartId());
-        dto.setOptions((cart.getOptions()));  // String[]
+        dto.setSessionId(cart.getSessionId());
+        dto.setMenu(MenuDTO.entityToDto(menu));
+        dto.setOptions(cart.getOptions());
         dto.setQuantity(cart.getQuantity());
 
         return dto;
@@ -100,13 +103,6 @@ public class MainServiceImpl implements MainService {
         return UserDTO.entityToDto(user);
     }
 
-    @Override
-    public List<MenuDTO> allMenus() {
-            return menuRepository.findAll()
-                    .stream()
-                    .map(MenuDTO::entityToDto)
-                    .collect(Collectors.toList());
-    }
 
     // 6. 장바구니 아이템 리스트 조회
     @Override
@@ -154,4 +150,63 @@ public class MainServiceImpl implements MainService {
 
         return OrdersDTO.entityToDto(order);
     }
+//    // 주문 생성: 프론트엔드에서 장바구니 데이터로 직접 주문 생성
+//    @Transactional
+//    public OrdersDTO placeOrder(OrderRequest request) {
+//        List<OrderItem> orderItems = new java.util.ArrayList<>();
+//        int totalAmount = 0;
+//
+//        for (CartItemDTO dto : request.getCartItems()) {
+//            Menu menu = menuRepository.findById(dto.getMenuId())
+//                    .orElseThrow(() -> new RuntimeException("메뉴를 찾을 수 없습니다. ID: " + dto.getMenuId()));
+//
+//            int basePrice = menu.getPrice();
+//            int optionPrice = 0;
+//
+//            for (String option : dto.getOptions()) {
+//                if (option.startsWith("샷 추가:")) {
+//                    int count = Integer.parseInt(option.split(":")[1].trim());
+//                    optionPrice += count * 500;
+//                } else if (option.contains("(+")) {
+//                    java.util.regex.Matcher m = java.util.regex.Pattern.compile("\\(\\+(\\d+)\\)").matcher(option);
+//                    if (m.find()) {
+//                        optionPrice += Integer.parseInt(m.group(1));
+//                    }
+//                } else if (option.startsWith("시럽 추가") || option.startsWith("토핑 추가") || option.startsWith("펄 추가:추가")) {
+//                    optionPrice += 500;
+//                }
+//            }
+//
+//            int itemTotal = (basePrice + optionPrice) * dto.getQuantity();
+//            totalAmount += itemTotal;
+//
+//            OrderItem item = OrderItem.builder()
+//                    .menuName(dto.getMenuName())
+//                    .quantity(dto.getQuantity())
+//                    .options(dto.getOptions())
+//                    .totalPrice(itemTotal)
+//                    .build();
+//
+//            orderItems.add(item);
+//        }
+//
+//        Orders order = Orders.builder()
+//                .phone(request.getPhone())
+//                .orderTime(java.time.LocalDateTime.now())
+//                .status("결제완료")
+//                .totalAmount((long) totalAmount)
+//                .orderMethod(request.getOrderMethod())
+//                .usedPoint(0L)
+//                .earnedPoint(0L)
+//                .build();
+//
+//        for (OrderItem item : orderItems) {
+//            item.setOrder(order);
+//        }
+//
+//        order.setOrderItems(orderItems);
+//        orderRepository.save(order);
+//
+//        return OrdersDTO.entityToDto(order);
+//    }
 }
