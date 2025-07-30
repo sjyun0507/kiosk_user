@@ -1,5 +1,6 @@
 package com.cafe_kiosk.kiosk_user.dto;
 
+import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
 import com.cafe_kiosk.kiosk_user.domain.Orders;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class OrdersDTO {
     private String phone;
     private LocalDateTime orderTime;
     private Long totalAmount;
-    private String status;
+    private OrderStatus orderStatus;
     private Long usedPoint = 0L;
     private Long earnedPoint = 0L;
     private String orderMethod;
@@ -32,7 +33,7 @@ public class OrdersDTO {
                 .phone(orders.getPhone())
                 .orderTime(orders.getOrderTime())
                 .totalAmount(orders.getTotalAmount())
-                .status(orders.getStatus())
+                .orderStatus(orders.getOrderStatus())
                 .usedPoint(orders.getUsedPoint())
                 .earnedPoint(orders.getEarnedPoint())
                 .orderMethod(orders.getOrderMethod())
@@ -47,7 +48,7 @@ public class OrdersDTO {
                 .phone(phone)
                 .orderTime(orderTime)
                 .totalAmount(totalAmount)
-                .status(status)
+                .orderStatus(orderStatus)
                 .usedPoint(usedPoint)
                 .earnedPoint(earnedPoint)
                 .orderMethod(orderMethod)
