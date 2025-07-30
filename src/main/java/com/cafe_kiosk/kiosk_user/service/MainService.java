@@ -1,5 +1,6 @@
 package com.cafe_kiosk.kiosk_user.service;
 
+import com.cafe_kiosk.kiosk_user.domain.Orders;
 import com.cafe_kiosk.kiosk_user.dto.*;
 
 import java.util.List;
@@ -18,7 +19,9 @@ public interface MainService {
 //    OrdersDTO placeOrder(OrderRequest request);
     OrdersDTO getOrder(Long orderId);
     CartDTO addToCart(AddCartRequest request);
+    UserDTO findOrCreateUserByPhone(String phone);
     UserDTO getUser(String phone);
 
 
+    Orders createOrder(String phone, List<CartDTO> cartItems, String orderMethod);
 }

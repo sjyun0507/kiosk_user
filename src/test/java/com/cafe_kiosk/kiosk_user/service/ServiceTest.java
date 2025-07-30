@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ServiceTest {
     @Autowired
-    private MessageService messageService;
+    private SmsService messageService;
 
     @Test
     void sendMessage() {

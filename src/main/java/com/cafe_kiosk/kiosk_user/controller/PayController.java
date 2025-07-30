@@ -1,19 +1,18 @@
 package com.cafe_kiosk.kiosk_user.controller;
 
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
-import com.cafe_kiosk.kiosk_user.domain.User;
-import com.cafe_kiosk.kiosk_user.dto.OrdersDTO;
-import com.cafe_kiosk.kiosk_user.dto.UserDTO;
-import com.cafe_kiosk.kiosk_user.repository.CartRepository;
+import com.cafe_kiosk.kiosk_user.domain.Orders;
+import com.cafe_kiosk.kiosk_user.dto.*;
 import com.cafe_kiosk.kiosk_user.service.MainService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
@@ -28,50 +27,81 @@ import java.util.Base64;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/pay")
+@CrossOrigin(origins = "http://localhost:5173")
 public class PayController {
-
-    private final OrderService orderService;
     private final MainService mainService;
+    private final OrderService orderService;
     @Value("${com.tjfgusdh.toss.widgetClientKey}")
     private String widgetClientKey;
 
     @Value("${com.tjfgusdh.toss.widgetSecretKey}")
     private String widgetSecretKey;
 
-    @GetMapping("/order/{orderId}")
+    //     주문 생성
+    @Operation(summary = "주문생성")
+    @PostMapping(value = "/order")
+    public ResponseEntity<OrdersDTO> createOrder(@RequestBody CreateOrderRequest request) {
+        // 1) 전화번호로 유저 조회 또는 생성
+        UserDTO userDTO = mainService.findOrCreateUserByPhone(request.getPhone());
+
+        // 2) 주문 생성
+        Orders order = mainService.createOrder(userDTO.getPhone(), request.getCartItems(), request.getOrderMethod());
+
+        // 3) DTO 변환 후 반환
+        OrdersDTO ordersDTO = OrdersDTO.entityToDto(order);
+        return ResponseEntity.ok(ordersDTO);
+    }
+
+    @Operation(summary = "주문정보")
+    @GetMapping(value = "/order/{orderId}")
     public ResponseEntity<?> getOrderInfo(@PathVariable Long orderId) {
         OrdersDTO order = orderService.getOrder(orderId);
         return ResponseEntity.ok(order);
     }
 
-    @PostMapping("/confirm")
-    public ResponseEntity<JSONObject> confirm(@RequestBody String jsonBody) throws Exception {
+//    @GetMapping("/checkout")
+//    public void checkout(Model model) {
+//        log.info("checkout()...");
+//
+//        //주문 ID 생성
+//        String orderId = orderService.getOrderId();
+//        log.info("orderId: {}", orderId);
+//        //더미 주문 추가
+//        orderService.addDummyOrder(orderId);
+//        //주문 정보 가져오기
+//        OrderDTO orderDTO = orderService.getOrder(orderId);
+//        log.info("order: {}", orderDTO);
+//        model.addAttribute("order", orderDTO);
+//        model.addAttribute("widgetClientKey", widgetClientKey);
+//    }
+
+    @Operation(summary = "결제")
+    @PostMapping(value = "/confirm")
+    public ResponseEntity<JSONObject> confirm(@RequestBody JSONObject jsonBody) throws Exception {
         JSONParser parser = new JSONParser();
         Long orderId;
         String amount;
         String paymentKey;
         String phone;
-        try {
-            JSONObject requestData = (JSONObject) parser.parse(jsonBody);
-            paymentKey = (String) requestData.get("paymentKey");
-            orderId = (Long) requestData.get("orderId");
-            amount = (String) requestData.get("amount");
-            phone = (String) requestData.get("phone");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
 
+        JSONObject requestData = jsonBody;
+        paymentKey = (String) requestData.get("paymentKey");
+        orderId = (Long) requestData.get("orderId");
+        amount = (String) requestData.get("amount");
+        phone = (String) requestData.get("phone");
 
+        mainService.findOrCreateUserByPhone(phone);
         long total = mainService.getCartItems().stream()
-                .mapToLong(cartItem -> cartItem.getMenu().getPrice())
+                .mapToLong(item -> item.getMenu().getPrice() * item.getQuantity())
                 .sum();
 
         if (total != Integer.parseInt(amount)) {
             JSONObject response = new JSONObject();
-            response.put("message", "결제 금액 위조");
+            response.put("error", "INVALID_AMOUNT");
+            response.put("message", "결제 금액이 실제 주문 금액과 일치하지 않습니다.");
             return ResponseEntity.status(400).body(response);
+
         }
 
         JSONObject obj = new JSONObject();

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,15 +96,35 @@ public class MainServiceImpl implements MainService {
         return dto;
     }
 
-//    public UserDTO findOrCreateUserByPhone(String phone) {
-//        return userRepository.findByPhone(phone)
-//                .orElseGet(() -> {
-//                    User newUser = new User();
-//                    newUser.setPhone(phone);
-//                    newUser.setPoints(0L);
-//                    return userRepository.save(newUser);
-//                });
-//    }
+    @Override
+    public UserDTO findOrCreateUserByPhone(String phone) {
+        User user = userRepository.findByPhone(phone);
+
+        if (user == null) {
+            user = new User();
+            user.setPhone(phone);
+            user.setPoints(0L);
+            user = userRepository.save(user);
+        }
+
+        return UserDTO.entityToDto(user);
+    }
+
+
+    public Orders createOrder(String phone, List<CartDTO> cartItems, String orderMethod) {
+        Orders orders = Orders.builder()
+                .phone(phone)
+//                .orderTime(LocalDateTime.now())
+                .totalAmount(cartItems.stream().mapToLong(item ->
+                                item.getMenu().getPrice() * item.getQuantity()).sum())
+                .orderStatus(OrderStatus.WAITING)
+                .orderMethod(orderMethod)
+                .usedPoint(0L)
+                .earnedPoint(0L)
+                .build();
+
+        return orderRepository.save(orders);
+    }
 
 
     @Override
