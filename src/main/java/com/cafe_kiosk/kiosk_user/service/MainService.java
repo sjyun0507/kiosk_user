@@ -18,6 +18,10 @@ public interface MainService {
     OrdersDTO getOrder(Long orderId);
     CartDTO addToCart(AddCartRequest request);
     UserDTO getUser(String phone);
+    UserDTO findOrCreateUserByPhone(String phone);
 
 
+    void userSave(UserDTO userDTO);
+
+    void orderSave(OrdersDTO ordersDTO);
 }
