@@ -5,16 +5,20 @@ import com.cafe_kiosk.kiosk_user.dto.*;
 import com.cafe_kiosk.kiosk_user.repository.*;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Log4j2
+@Slf4j
 @Builder
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class MainServiceImpl implements MainService {
 
     private final CategoryRepository categoryRepository;
@@ -95,14 +99,25 @@ public class MainServiceImpl implements MainService {
         return dto;
     }
 
-
-
     @Override
     public UserDTO getUser(String phone) {
         User user = userRepository.findByPhone(phone);
         return UserDTO.entityToDto(user);
     }
 
+    @Override
+    public UserDTO findOrCreateUserByPhone(String phone) {
+        User user = userRepository.findByPhone(phone);
+
+        if (user == null) {
+            user = new User();
+            user.setPhone(phone);
+            user.setPoints(0L);
+            user = userRepository.save(user);
+        }
+
+        return UserDTO.entityToDto(user);
+    }
 
     // 6. 장바구니 아이템 리스트 조회
     @Override
@@ -112,8 +127,6 @@ public class MainServiceImpl implements MainService {
                 .map(CartDTO::entityToDto)
                 .collect(Collectors.toList());
     }
-
-
 
     // 7. 장바구니 아이템 수량 변경
 //    @Transactional
@@ -150,63 +163,39 @@ public class MainServiceImpl implements MainService {
 
         return OrdersDTO.entityToDto(order);
     }
-//    // 주문 생성: 프론트엔드에서 장바구니 데이터로 직접 주문 생성
-//    @Transactional
-//    public OrdersDTO placeOrder(OrderRequest request) {
-//        List<OrderItem> orderItems = new java.util.ArrayList<>();
-//        int totalAmount = 0;
-//
-//        for (CartItemDTO dto : request.getCartItems()) {
-//            Menu menu = menuRepository.findById(dto.getMenuId())
-//                    .orElseThrow(() -> new RuntimeException("메뉴를 찾을 수 없습니다. ID: " + dto.getMenuId()));
-//
-//            int basePrice = menu.getPrice();
-//            int optionPrice = 0;
-//
-//            for (String option : dto.getOptions()) {
-//                if (option.startsWith("샷 추가:")) {
-//                    int count = Integer.parseInt(option.split(":")[1].trim());
-//                    optionPrice += count * 500;
-//                } else if (option.contains("(+")) {
-//                    java.util.regex.Matcher m = java.util.regex.Pattern.compile("\\(\\+(\\d+)\\)").matcher(option);
-//                    if (m.find()) {
-//                        optionPrice += Integer.parseInt(m.group(1));
-//                    }
-//                } else if (option.startsWith("시럽 추가") || option.startsWith("토핑 추가") || option.startsWith("펄 추가:추가")) {
-//                    optionPrice += 500;
-//                }
-//            }
-//
-//            int itemTotal = (basePrice + optionPrice) * dto.getQuantity();
-//            totalAmount += itemTotal;
-//
-//            OrderItem item = OrderItem.builder()
-//                    .menuName(dto.getMenuName())
-//                    .quantity(dto.getQuantity())
-//                    .options(dto.getOptions())
-//                    .totalPrice(itemTotal)
-//                    .build();
-//
-//            orderItems.add(item);
-//        }
-//
-//        Orders order = Orders.builder()
-//                .phone(request.getPhone())
-//                .orderTime(java.time.LocalDateTime.now())
-//                .status("결제완료")
-//                .totalAmount((long) totalAmount)
-//                .orderMethod(request.getOrderMethod())
-//                .usedPoint(0L)
-//                .earnedPoint(0L)
+
+
+    @Override
+    public void userSave(UserDTO userDTO) {
+//        User user = User.builder()
+//                .userId(userDTO.getUserId())
+//                .phone(userDTO.getPhone())
+//                .points(userDTO.getPoints())
 //                .build();
-//
-//        for (OrderItem item : orderItems) {
-//            item.setOrder(order);
-//        }
-//
-//        order.setOrderItems(orderItems);
-//        orderRepository.save(order);
-//
-//        return OrdersDTO.entityToDto(order);
-//    }
+//        userRepository.save(user);
+        User existingUser = userRepository.findByPhone(userDTO.getPhone());
+
+        Long earnedPoint = userDTO.getPoints() != null ? userDTO.getPoints() : 0L;
+
+        if (existingUser != null) {
+            // 기존 유저 → 누적
+            Long currentPoints = existingUser.getPoints() != null ? existingUser.getPoints() : 0L;
+            existingUser.setPoints(currentPoints + earnedPoint);
+            userRepository.save(existingUser); // update
+            log.info("기존포인트:"+ existingUser.getPoints());
+        } else {
+            // 신규 유저 → 포인트 초기값으로 저장
+            User newUser = User.builder()
+                    .phone(userDTO.getPhone())
+                    .points(earnedPoint)
+                    .build();
+            userRepository.save(newUser); // insert
+        }
+
+    }
+    @Override
+    public void orderSave(OrdersDTO ordersDTO) {
+        Orders orders = ordersDTO.dtoToEntity();
+        orderRepository.save(orders);
+    }
 }
