@@ -22,6 +22,9 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
+    @Column(unique = true)
+    private String tossOrderId; //주문 번호(Toss 에 넘기는 고유 문자열 ID)
+
     @Column(length = 20)
     private String phone;
 
@@ -34,7 +37,6 @@ public class Orders {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private OrderStatus orderStatus;
-
 
     private Long usedPoint = 0L;
 

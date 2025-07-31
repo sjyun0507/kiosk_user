@@ -1,8 +1,8 @@
 package com.cafe_kiosk.kiosk_user.controller;
 
-import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
-import com.cafe_kiosk.kiosk_user.domain.Orders;
-import com.cafe_kiosk.kiosk_user.dto.*;
+import com.cafe_kiosk.kiosk_user.dto.AddCartRequest;
+import com.cafe_kiosk.kiosk_user.dto.CartDTO;
+import com.cafe_kiosk.kiosk_user.repository.CartRepository;
 import com.cafe_kiosk.kiosk_user.service.MainService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,15 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
 @Log4j2
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +21,7 @@ import java.util.Base64;
 @CrossOrigin(origins = "http://localhost:5173")
 public class CartController {
     private final MainService mainService;
+    private final CartRepository cartRepository;
 
     @Operation(summary = "장바구니담기")
     @PostMapping(value="/")
@@ -41,5 +33,9 @@ public class CartController {
 
     }
 
-
+    @DeleteMapping("/{sessionId}")
+    public ResponseEntity<CartDTO> deleteCart(@PathVariable String sessionId) {
+        cartRepository.deleteBySessionId(sessionId);
+        return ResponseEntity.ok(new CartDTO());
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 @Log4j2
@@ -52,4 +53,10 @@ public class OrderService {
     public void modifyPaymentKey(Long orderId, String paymentKey){
         orderRepository.updatePaymentKey(orderId, paymentKey);
     }
+
+    public Long getOrderIdByTossOrderId(String tossOrderId) {
+        Orders order = orderRepository.findByTossOrderId(tossOrderId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 tossOrderId의 주문이 없습니다."));
+        return order.getOrderId();
+    } //DB에서 Orders 찾고 → orderId(Long)를 반환함
 }
