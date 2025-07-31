@@ -1,8 +1,11 @@
 package com.cafe_kiosk.kiosk_user.controller;
 
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
+import com.cafe_kiosk.kiosk_user.dto.CartDTO;
 import com.cafe_kiosk.kiosk_user.dto.OrdersDTO;
+import com.cafe_kiosk.kiosk_user.service.MainService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
+import com.cafe_kiosk.kiosk_user.service.SmsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
@@ -20,7 +23,10 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
@@ -29,7 +35,9 @@ import java.util.Base64;
 @RequestMapping("/api/pay")
 public class PayController {
 
+    private final MainService mainService;
     private final OrderService orderService;
+    private final SmsService smsService;
 
     @Value("${com.tjfgusdh.toss.widgetClientKey}")
     private String widgetClientKey;
@@ -37,25 +45,25 @@ public class PayController {
     @Value("${com.tjfgusdh.toss.widgetSecretKey}")
     private String widgetSecretKey;
 
-    @GetMapping("/")
-    public String index() {
-        return "redirect:/pay/checkout";
-
-    }
-
-    @GetMapping("/checkout")
-    public void checkout(Model model) {
-        log.info("checkout()...");
-
-        //주문 ID 생성
-        String orderId = orderService.getOrderId();
-        log.info("orderId: {}", orderId);
-
-        //주문 정보 가져오기
-        String orderDTO = orderService.getOrderId();
-        model.addAttribute("order", orderDTO);
-        model.addAttribute("widgetClientKey", widgetClientKey);
-    }
+//    @GetMapping("/")
+//    public String index() {
+//        return "redirect:/pay/checkout";
+//
+//    }
+//
+//    @GetMapping("/checkout")
+//    public void checkout(Model model) {
+//        log.info("checkout()...");
+//
+//        //주문 ID 생성
+//        String orderId = orderService.getOrderId();
+//        log.info("orderId: {}", orderId);
+//
+//        //주문 정보 가져오기
+//        String orderDTO = orderService.getOrderId();
+//        model.addAttribute("order", orderDTO);
+//        model.addAttribute("widgetClientKey", widgetClientKey);
+//    }
 
     @PostMapping("/confirm")
     public ResponseEntity<JSONObject> confirm(@RequestBody String jsonBody) throws Exception {
@@ -64,6 +72,12 @@ public class PayController {
         String amount;
         String paymentKey;
         Long orderId;
+
+        List<CartDTO> cartDTOList = mainService.getCartItems();
+
+        String menuList = cartDTOList.stream()
+                .map(cart -> cart.getMenu().getName())
+                .collect(Collectors.joining(", "));
 
         try {
             JSONObject requestData = (JSONObject) parser.parse(jsonBody);
@@ -82,6 +96,7 @@ public class PayController {
             response.put("message", "결제 금액 위조");
             return ResponseEntity.status(400).body(response);
         }
+        String phone = mainService.getPhoneByOrderId(orderId);
 
         JSONObject obj = new JSONObject();
         obj.put("orderId", orderId);
@@ -114,6 +129,11 @@ public class PayController {
             orderService.modifyOrderStatus(orderId, OrderStatus.COMPLETE);
         }
 
+
+        String text = ("주문이 완료되었습니다 \n주문번호: " + orderId +"\n주문금액: " + amount +"\n주문내역: " + menuList);
+        log.info("sendSms called");
+        smsService.sendSms(phone, text);
+        mainService.clearCart();
         return ResponseEntity.status(code).body(jsonObject);
     }
 
