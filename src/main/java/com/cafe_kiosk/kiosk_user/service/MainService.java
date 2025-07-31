@@ -4,7 +4,6 @@ import com.cafe_kiosk.kiosk_user.domain.Orders;
 import com.cafe_kiosk.kiosk_user.dto.*;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MainService {
     List<MenuDTO> allMenus();
@@ -19,9 +18,12 @@ public interface MainService {
 //    OrdersDTO placeOrder(OrderRequest request);
     OrdersDTO getOrder(Long orderId);
     CartDTO addToCart(AddCartRequest request);
-    UserDTO findOrCreateUserByPhone(String phone);
     UserDTO getUser(String phone);
+    UserDTO findOrCreateUserByPhone(String phone);
 
 
     Orders createOrder(String phone, List<CartDTO> cartItems, String orderMethod);
+    void userSave(UserDTO userDTO);
+
+    void orderSave(OrdersDTO ordersDTO);
 }

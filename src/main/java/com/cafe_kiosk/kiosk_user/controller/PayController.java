@@ -55,18 +55,7 @@ public class PayController {
         String orderDTO = orderService.getOrderId();
         model.addAttribute("order", orderDTO);
         model.addAttribute("widgetClientKey", widgetClientKey);
-
     }
-
-//    @GetMapping("/pay/success")
-//    public void success(){
-//        log.info("success()...");
-//    }
-//
-//    @GetMapping("/pay/fail")
-//    public void fail(){
-//        log.info("fail()...");
-//    }
 
     @PostMapping("/confirm")
     public ResponseEntity<JSONObject> confirm(@RequestBody String jsonBody) throws Exception {
@@ -127,4 +116,5 @@ public class PayController {
 
         return ResponseEntity.status(code).body(jsonObject);
     }
+
 }
