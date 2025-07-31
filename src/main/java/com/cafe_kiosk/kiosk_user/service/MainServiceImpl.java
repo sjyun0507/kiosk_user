@@ -117,6 +117,7 @@ public class MainServiceImpl implements MainService {
         return UserDTO.entityToDto(user);
     }
 
+
     // 6. 장바구니 아이템 리스트 조회
     @Override
     public List<CartDTO> getCartItems() {

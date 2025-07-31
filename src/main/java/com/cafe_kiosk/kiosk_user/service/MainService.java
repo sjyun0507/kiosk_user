@@ -20,10 +20,6 @@ public interface MainService {
     CartDTO addToCart(AddCartRequest request);
     UserDTO getUser(String phone);
     UserDTO findOrCreateUserByPhone(String phone);
-
-
-    Orders createOrder(String phone, List<CartDTO> cartItems, String orderMethod);
     void userSave(UserDTO userDTO);
-
     void orderSave(OrdersDTO ordersDTO);
 }
