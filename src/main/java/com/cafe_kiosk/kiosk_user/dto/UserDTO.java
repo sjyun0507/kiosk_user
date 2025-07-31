@@ -16,14 +16,6 @@ public class UserDTO extends BaseEntityDTO {
     private String phone;
     private Long points;
 
-    // DTO → Entity
-    public User dtoToEntity() {
-        return User.builder()
-                .userId(userId)
-                .phone(phone)
-                .points(points)
-                .build();
-    }
     // Entity → DTO
     public static UserDTO entityToDto(User user) {
         return UserDTO.builder()
@@ -32,7 +24,14 @@ public class UserDTO extends BaseEntityDTO {
                 .points(user.getPoints() != null ? user.getPoints() : 0L)
                 .build();
     }
-
+    // DTO → Entity
+    public User dtoToEntity() {
+        return User.builder()
+                .userId(userId)
+                .phone(phone)
+                .points(points)
+                .build();
+    }
 
 
 }

@@ -46,7 +46,7 @@ public class Orders {
     private String orderMethod;
 
     private String paymentKey;
-    
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>(); //OrderItem 과의 관계도 설정
 }

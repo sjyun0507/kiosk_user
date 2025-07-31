@@ -1,10 +1,12 @@
 package com.cafe_kiosk.kiosk_user.domain;
 
+import com.cafe_kiosk.kiosk_user.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "user")
 @Builder
 @NoArgsConstructor

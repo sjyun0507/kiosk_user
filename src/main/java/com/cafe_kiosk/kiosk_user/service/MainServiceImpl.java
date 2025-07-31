@@ -6,7 +6,6 @@ import com.cafe_kiosk.kiosk_user.repository.*;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
-@Slf4j
 @Builder
 @Service
 @RequiredArgsConstructor
@@ -118,6 +116,7 @@ public class MainServiceImpl implements MainService {
 
         return UserDTO.entityToDto(user);
     }
+
 
     // 6. 장바구니 아이템 리스트 조회
     @Override
