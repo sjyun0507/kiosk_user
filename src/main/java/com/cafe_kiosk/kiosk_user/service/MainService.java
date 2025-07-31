@@ -22,4 +22,5 @@ public interface MainService {
     UserDTO findOrCreateUserByPhone(String phone);
     void userSave(UserDTO userDTO);
     void orderSave(OrdersDTO ordersDTO);
+    String getPhoneByOrderId(Long orderId);
 }

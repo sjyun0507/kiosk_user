@@ -6,6 +6,7 @@ import com.cafe_kiosk.kiosk_user.repository.*;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.query.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -196,5 +197,12 @@ public class MainServiceImpl implements MainService {
     public void orderSave(OrdersDTO ordersDTO) {
         Orders orders = ordersDTO.dtoToEntity();
         orderRepository.save(orders);
+    }
+
+    @Override
+    public String getPhoneByOrderId(Long orderId) {
+        Orders order = orderRepository.findByOrderId(orderId);
+        String phone = order.getPhone();
+        return phone;
     }
 }
