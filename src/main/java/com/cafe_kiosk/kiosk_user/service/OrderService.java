@@ -1,6 +1,8 @@
 package com.cafe_kiosk.kiosk_user.service;
 
+import com.cafe_kiosk.kiosk_user.domain.OrderItem;
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
+import com.cafe_kiosk.kiosk_user.repository.OrderItemRepository;
 import com.cafe_kiosk.kiosk_user.repository.OrderRepository;
 import com.cafe_kiosk.kiosk_user.domain.Orders;
 import com.cafe_kiosk.kiosk_user.dto.OrdersDTO;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,6 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final ModelMapper modelMapper;
 
     public String getOrderId(){
@@ -38,13 +42,6 @@ public class OrderService {
         log.info(dummyOrder);
         orderRepository.save(dummyOrder);
     }
-    public OrdersDTO getOrder(Long orderId){
-        log.info("orderId : {}", orderId);
-        Orders order = orderRepository.findByOrderId(orderId);
-        log.info("order: {}", order);
-
-        return modelMapper.map(order, OrdersDTO.class);
-    }
 
     public void modifyOrderStatus(Long orderId, OrderStatus orderStatus){
         orderRepository.updateOrderStatus(orderId, orderStatus);
@@ -59,4 +56,26 @@ public class OrderService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 tossOrderId의 주문이 없습니다."));
         return order.getOrderId();
     } //DB에서 Orders 찾고 → orderId(Long)를 반환함
+
+    // 10. 주문 상세 조회
+    public OrdersDTO getOrder(Long orderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
+
+        // 주문 아이템 조회
+        List<OrderItem> items = orderItemRepository.findByOrder_OrderId(orderId);
+
+        return OrdersDTO.entityToDto(order);
+    }
+
+    public void orderSave(OrdersDTO ordersDTO) {
+        Orders orders = ordersDTO.dtoToEntity();
+        orderRepository.save(orders);
+    }
+
+    public String getPhoneByOrderId(Long orderId) {
+        Orders order = orderRepository.findByOrderId(orderId);
+        String phone = order.getPhone();
+        return phone;
+    }
 }
