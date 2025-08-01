@@ -53,7 +53,7 @@ public class OrderController {
 //        userDTO.setPoints(userDTO.getPoints() + earnedPoint);
         userService.userSave(userDTO);
 
-        ordersDTO.setOrderStatus(OrderStatus.WAITING);
+        ordersDTO.setStatus(OrderStatus.WAITING);
         orderService.orderSave(ordersDTO);
 
         Map<String,Object> response = new HashMap<>();
@@ -63,7 +63,7 @@ public class OrderController {
         System.out.println("DTO 값: " + ordersDTO);
         System.out.println("DTO 값: " + userDTO);
         System.out.println("earnedPoint 계산 값: " + (ordersDTO.getTotalAmount() * 0.05));
-        System.out.println("orderStatus: " + ordersDTO.getOrderStatus());
+        System.out.println("orderStatus: " + ordersDTO.getStatus());
 
         return ResponseEntity.ok(response);
     }
