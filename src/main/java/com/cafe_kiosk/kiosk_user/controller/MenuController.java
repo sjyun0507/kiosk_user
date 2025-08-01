@@ -38,7 +38,7 @@ public class MenuController {
 //
 //        return menuDTOS;
 //    }
-
+    @Operation(summary = "모든 메뉴")
     @GetMapping(value="/all")
     public Map<String, Object> findAll() {
         log.info("findAll");
