@@ -11,6 +11,7 @@ import com.cafe_kiosk.kiosk_user.service.MainService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ import java.util.UUID;
 public class OrderController {
     private final OrderRepository orderRepository;
     private final MainService mainService;
+    private final UserRepository userRepository;
 
 
     @PostMapping("/order")
@@ -51,7 +53,7 @@ public class OrderController {
 //                .earnedPoint(ordersDTO.getEarnedPoint())
 //                .build();
 
-        userDTO.setPoints(userDTO.getPoints() + earnedPoint);
+//        userDTO.setPoints(userDTO.getPoints() + earnedPoint);
         mainService.userSave(userDTO);
 
         ordersDTO.setOrderStatus(OrderStatus.WAITING);
@@ -68,4 +70,20 @@ public class OrderController {
 
         return ResponseEntity.ok(response);
     }
+
+//    @GetMapping("/user/points/{phone}")
+//    public ResponseEntity<Integer> getUserPoint(@PathVariable String phone) {
+//        UserDTO userDTO = mainService.getUser(phone);
+//        Integer points = Math.toIntExact(userDTO.getPoints());
+//        return ResponseEntity.ok(points);      }
+    @GetMapping("/user/points")
+    public ResponseEntity<Map<String, Object>> getUserPoints(@RequestParam String phone) {
+        User user = userRepository.findByPhone(phone);
+        if (user != null) {
+            return ResponseEntity.ok(Map.of("points", user.getPoints()));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("points", 0));
+        }
+    }
+
 }

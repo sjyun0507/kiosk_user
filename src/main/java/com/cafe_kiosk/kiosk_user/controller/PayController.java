@@ -3,6 +3,7 @@ package com.cafe_kiosk.kiosk_user.controller;
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
 import com.cafe_kiosk.kiosk_user.dto.CartDTO;
 import com.cafe_kiosk.kiosk_user.dto.OrdersDTO;
+import com.cafe_kiosk.kiosk_user.dto.UserDTO;
 import com.cafe_kiosk.kiosk_user.service.MainService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
 import com.cafe_kiosk.kiosk_user.service.SmsService;
@@ -82,7 +83,7 @@ public class PayController {
         try {
             JSONObject requestData = (JSONObject) parser.parse(jsonBody);
             paymentKey = (String) requestData.get("paymentKey");
-            tossOrderId = (String) requestData.get("orderId"); //// Toss 기준 orderId (문자열)
+            tossOrderId = (String) requestData.get("orderId"); // Toss 기준 orderId (문자열)
             amount = (String) requestData.get("amount");
 
             // tossOrderId → 내부 DB의 Long 타입 orderId 조회
@@ -99,7 +100,7 @@ public class PayController {
         String phone = mainService.getPhoneByOrderId(orderId);
 
         JSONObject obj = new JSONObject();
-        obj.put("orderId", orderId);
+        obj.put("orderId", tossOrderId);
         obj.put("amount", amount);
         obj.put("paymentKey", paymentKey);
 
@@ -115,8 +116,9 @@ public class PayController {
 
         OutputStream outputStream = connection.getOutputStream();
         outputStream.write(obj.toString().getBytes(StandardCharsets.UTF_8));
-
+        log.info(obj.toString());
         int code = connection.getResponseCode();
+        log.info("code: " + code);
         InputStream responseStream = code == 200 ? connection.getInputStream() : connection.getErrorStream();
 
         Reader reader = new InputStreamReader(responseStream, StandardCharsets.UTF_8);
@@ -125,15 +127,25 @@ public class PayController {
 
 //         결제 승인 성공시 DB 반영
         if (code == 200) {
+            log.info("결제 승인 성공시 DB 반영");
+
             orderService.modifyPaymentKey(orderId, paymentKey);
             orderService.modifyOrderStatus(orderId, OrderStatus.COMPLETE);
+
+            UserDTO userDTO = mainService.findOrCreateUserByPhone(phone);
+            Long usedPoints = mainService.getOrder(orderId).getUsedPoint();
+            Long earnedPoint = mainService.getOrder(orderId).getEarnedPoint();
+            userDTO.setPoints(userDTO.getPoints() + earnedPoint-usedPoints);
+            mainService.userSave(userDTO);
+
+            log.info("주문완료 승인후 테스트");
+            String text = ("주문이 완료되었습니다 \n주문번호: " + orderId +"\n주문금액: " + amount +"업체명: BEANS COFFEE"+"\n주문내역: " + menuList);
+//        smsService.sendSms(phone, text);
+            mainService.clearCart();
         }
 
+        // 전화번호로 유저 조회 또는 생성
 
-        String text = ("주문이 완료되었습니다 \n주문번호: " + orderId +"\n주문금액: " + amount +"\n주문내역: " + menuList);
-        log.info("sendSms called");
-        smsService.sendSms(phone, text);
-        mainService.clearCart();
         return ResponseEntity.status(code).body(jsonObject);
     }
 
