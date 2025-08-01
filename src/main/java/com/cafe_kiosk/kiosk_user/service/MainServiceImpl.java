@@ -167,31 +167,30 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public void userSave(UserDTO userDTO) {
-//        User user = User.builder()
-//                .userId(userDTO.getUserId())
-//                .phone(userDTO.getPhone())
-//                .points(userDTO.getPoints())
-//                .build();
-//        userRepository.save(user);
-        User existingUser = userRepository.findByPhone(userDTO.getPhone());
-
-        Long earnedPoint = userDTO.getPoints() != null ? userDTO.getPoints() : 0L;
-
-        if (existingUser != null) {
-            // 기존 유저 → 누적
-            Long currentPoints = existingUser.getPoints() != null ? existingUser.getPoints() : 0L;
-            existingUser.setPoints(currentPoints + earnedPoint);
-            userRepository.save(existingUser); // update
-            log.info("기존포인트:"+ existingUser.getPoints());
-        } else {
-            // 신규 유저 → 포인트 초기값으로 저장
-            User newUser = User.builder()
-                    .phone(userDTO.getPhone())
-                    .points(earnedPoint)
-                    .build();
-            userRepository.save(newUser); // insert
-        }
-
+        User user = User.builder()
+                .userId(userDTO.getUserId())
+                .phone(userDTO.getPhone())
+                .points(userDTO.getPoints())
+                .build();
+        userRepository.save(user);
+//        User existingUser = userRepository.findByPhone(userDTO.getPhone());
+//
+//        Long earnedPoint = userDTO.getPoints() != null ? userDTO.getPoints() : 0L;
+//
+//        if (existingUser != null) {
+//            // 기존 유저 → 누적
+//            Long currentPoints = existingUser.getPoints() != null ? existingUser.getPoints() : 0L;
+//            existingUser.setPoints(currentPoints + earnedPoint);
+//            userRepository.save(existingUser); // update
+//            log.info("기존포인트:"+ existingUser.getPoints());
+//        } else {
+//            // 신규 유저 → 포인트 초기값으로 저장
+//            User newUser = User.builder()
+//                    .phone(userDTO.getPhone())
+//                    .points(earnedPoint)
+//                    .build();
+//            userRepository.save(newUser); // insert
+//        }
     }
     @Override
     public void orderSave(OrdersDTO ordersDTO) {
