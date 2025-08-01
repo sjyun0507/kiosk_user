@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.net.ssl.SSLSession;
 import java.util.Optional;
 
 
@@ -21,8 +20,8 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Orders o SET o.orderStatus = :orderStatus WHERE o.orderId = :orderId")
-    void updateOrderStatus(@Param("orderId") Long orderId, @Param("orderStatus") OrderStatus orderStatus);
+    @Query("UPDATE Orders o SET o.status = :orderStatus WHERE o.orderId = :orderId")
+    void updateOrderStatus(@Param("orderId") Long orderId, @Param("status") OrderStatus status);
     Orders findByOrderId(Long orderId);
 
     Optional<Orders> findByTossOrderId(String tossOrderId);
