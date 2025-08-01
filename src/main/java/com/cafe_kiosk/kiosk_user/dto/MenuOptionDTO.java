@@ -15,7 +15,7 @@ public class MenuOptionDTO {
     private Long optionId;
     private CategoryDTO category;
     private String optionName;
-    private Long optionPrice = 0L;
+    private Long optionPrice;
     private String optionType;
 
     // Entity → DTO

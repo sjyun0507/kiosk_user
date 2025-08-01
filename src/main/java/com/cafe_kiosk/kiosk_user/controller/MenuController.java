@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @RestController
@@ -29,27 +31,32 @@ public class MenuController {
         return categories;
     }
 
-    @Operation(summary = "카테고리 안에 메뉴")
-    @GetMapping(value = "/{category_id}")
-    public List<MenuDTO> findByCategory(@PathVariable Long category_id) {
-        List<MenuDTO> menuDTOS = menuService.getMenusByCategory(category_id);
+//    @Operation(summary = "카테고리 안에 메뉴")
+//    @GetMapping(value = "/{category_id}")
+//    public List<MenuDTO> findByCategory(@PathVariable Long category_id) {
+//        List<MenuDTO> menuDTOS = menuService.getMenusByCategory(category_id);
+//
+//        return menuDTOS;
+//    }
 
-        return menuDTOS;
-    }
-
-    @Operation(summary= "모든 메뉴")
     @GetMapping(value="/all")
-    public List<MenuDTO> findAll() {
+    public Map<String, Object> findAll() {
         log.info("findAll");
-        List<MenuDTO> all = menuService.allMenus();
-        return all;
+        List<MenuDTO> menus = menuService.allMenus();
+        List<MenuOptionDTO> options = menuService.getOptionsNotDeleted();
 
+        Map<String, Object> result = new HashMap<>();
+        result.put("menus", menus);
+        result.put("options", options);
+
+        return result;
     }
+
 
     @Operation(summary = "메뉴 상세옵션")
-    @GetMapping(value = "/{category_id}/{menu_id}")
-    public List<MenuOptionDTO> getMenuOption(@PathVariable Long category_id, @PathVariable Long menu_id) {
-        List<MenuOptionDTO> optionDTOS = menuService.getOptions(menu_id);
+    @GetMapping(value = "/{category_id}")
+    public List<MenuOptionDTO> getMenuOption(@PathVariable Long category_id) {
+        List<MenuOptionDTO> optionDTOS = menuService.getOptions(category_id);
         return optionDTOS;
     }
 

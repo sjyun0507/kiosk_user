@@ -137,7 +137,7 @@ public class PayController {
 
             log.info("주문완료 승인후 테스트");
             String text = ("주문이 완료되었습니다 \n주문번호: " + orderId +"\n주문금액: " + amount +"업체명: BEANS COFFEE"+"\n주문내역: " + menuList);
-        smsService.sendSms(phone, text);
+//          smsService.sendSms(phone, text);
             cartService.clearCart();
         }
 
