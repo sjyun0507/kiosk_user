@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MenuOptionRepository extends JpaRepository<MenuOption, Long> {
     List<MenuOption> findByCategory_CategoryId(Long categoryId);
+    List<MenuOption> findByIsDeleted(Boolean isDeleted);
 }

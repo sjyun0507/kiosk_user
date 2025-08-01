@@ -28,6 +28,8 @@ public class AdminLog extends BaseEntity{
 
     @Column(length = 50)
     private String targetTable;
+    @Column(length = 50)
+    private String targetId;
 
-    private Long targetId;
+    private String description;
 }

@@ -36,7 +36,7 @@ public class Orders {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
-    private OrderStatus orderStatus;
+    private OrderStatus status;
 
     private Long usedPoint = 0L;
 

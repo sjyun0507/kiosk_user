@@ -38,8 +38,20 @@ public class MenuService {
         return MenuDTO.entityToDto(menu);
     }
     // 4. 메뉴 옵션 조회
-    public List<MenuOptionDTO> getOptions(Long menuId) {
-        return menuOptionRepository.findByCategory_CategoryId(menuId)
+    public List<MenuOptionDTO> getOptions(Long categoryId) {
+        return menuOptionRepository.findByCategory_CategoryId(categoryId)
+                .stream()
+                .map(MenuOptionDTO::entityToDto)
+                .collect(Collectors.toList());
+    }
+    public List<MenuOptionDTO> getAllOptions() {
+        return menuOptionRepository.findAll()
+                .stream()
+                .map(MenuOptionDTO::entityToDto)
+                .collect(Collectors.toList());
+    }
+    public List<MenuOptionDTO> getOptionsNotDeleted() {
+        return menuOptionRepository.findByIsDeleted(false)
                 .stream()
                 .map(MenuOptionDTO::entityToDto)
                 .collect(Collectors.toList());

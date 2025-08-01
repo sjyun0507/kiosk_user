@@ -30,4 +30,7 @@ public class MenuOption {
 
     @Column(length = 50)
     private String optionType;
+
+    @Column(name = "is_deleted", columnDefinition = "TINYINT(1) DEFAULT 0")
+    private Boolean isDeleted = false;
 }

@@ -16,7 +16,7 @@ public class AdminLogDTO extends BaseEntityDTO {
     private AdminDTO admin;
     private String actionType;
     private String targetTable;
-    private Long targetId;
+    private String targetId;
 
     public static AdminLogDTO entityToDto(AdminLog adminLog) {
         return AdminLogDTO.builder()
