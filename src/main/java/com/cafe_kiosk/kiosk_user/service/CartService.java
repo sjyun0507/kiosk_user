@@ -40,6 +40,7 @@ public class CartService {
         cart.setMenu(menu);
         cart.setOptions(request.getOptions());  // String[] 배열 그대로 세팅
         cart.setQuantity(request.getQuantity());
+        cart.setItemId(request.getItemId());
         cartRepository.save(cart);
 
         CartDTO dto = new CartDTO();
@@ -48,6 +49,7 @@ public class CartService {
         dto.setMenu(MenuDTO.entityToDto(menu));
         dto.setOptions(cart.getOptions());
         dto.setQuantity(cart.getQuantity());
+        dto.setItemId(cart.getItemId());
 
         return dto;
     }
@@ -68,8 +70,8 @@ public class CartService {
         cartRepository.save(cartItem);
     }
     // 8. 장바구니 아이템 삭제
-    public void removeCartItem(Long cartItemId) {
-        cartRepository.deleteById(cartItemId);
+    public void removeCartItem(String cartItemId) {
+        cartRepository.deleteByItemId(cartItemId);
     }
 
     // 9. 장바구니 전체 비우기

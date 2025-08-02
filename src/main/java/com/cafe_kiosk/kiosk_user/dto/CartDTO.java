@@ -21,7 +21,7 @@ public class CartDTO extends BaseEntityDTO {
     private String[] options;
     private Long quantity = 1L;
     private String sessionId; //*주문고객 식별용 Id 추가
-
+    private String itemId;
 
     // 엔티티 → DTO
     public static CartDTO entityToDto(Cart cart) {
@@ -32,6 +32,7 @@ public class CartDTO extends BaseEntityDTO {
                 .menu(MenuDTO.entityToDto(cart.getMenu())) // Menu 엔티티 → MenuDTO
                 .option(cart.getOption() != null ? MenuOptionDTO.entityToDto(cart.getOption()) : null)
                 .quantity(cart.getQuantity())
+                .itemId(cart.getItemId())
                 .build();
     }
 
@@ -44,6 +45,7 @@ public class CartDTO extends BaseEntityDTO {
                 .option(option)
                 .quantity(quantity)
                 .sessionId(sessionId)
+                .itemId(itemId)
                 .build();
     }
 }
