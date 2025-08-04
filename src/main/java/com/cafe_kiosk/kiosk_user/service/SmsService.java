@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmsService {
     private DefaultMessageService messageService;
-    @Value("${com.tjfgusdh.nurigo.apiKey}")
+    @Value("${messageService}")
     private String apiKey;
-    @Value("${com.tjfgusdh.nurigo.apiSecretKey}")
+    @Value("${apiKey}")
     private String apiSecretKey;
-    @Value("${com.tjfgusdh.nurigo.domain}")
+    @Value("${apiSecretKey}")
     private String domain;
-    @Value("${com.tjfgusdh.nurigo.from}")
+    @Value("${domain}")
     private String from;
 
     // 초기화 메서드
