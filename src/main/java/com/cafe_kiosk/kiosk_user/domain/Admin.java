@@ -18,7 +18,7 @@ public class Admin extends BaseEntity{
     @Column(length = 20)
     private String adminId;
 
-    @Column(length = 40)
+    @Column(length = 100)
     private String adminPw;
 
     @Enumerated(EnumType.STRING)

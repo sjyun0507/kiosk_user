@@ -19,7 +19,7 @@ public class CartController {
     private final CartService cartService;
 
     @Operation(summary = "장바구니담기")
-    @PostMapping(value="/")
+    @PostMapping(value="/add")
     public ResponseEntity<CartDTO> addCart(@RequestBody AddCartRequest cart) {
         log.info(cart);
         log.info("Session ID: {}", cart.getSessionId());
@@ -33,4 +33,12 @@ public class CartController {
         cartService.clearCartBySessionId(sessionId);
         return ResponseEntity.ok(new CartDTO());
     }
+
+    @DeleteMapping("/remove/{ItemId}")
+    public ResponseEntity<Void> deleteCartOne(@PathVariable String ItemId) {
+        System.out.println("프론트에서 보낸 삭제 요청 ID: " + ItemId);
+        cartService.removeCartItem(ItemId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

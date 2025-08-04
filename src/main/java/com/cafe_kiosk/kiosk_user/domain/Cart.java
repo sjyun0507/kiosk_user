@@ -31,6 +31,8 @@ public class Cart extends BaseEntity {
 
     private String options;
 
+    private String itemId;
+
     public String[] getOptions() {
         if (options == null || options.isEmpty()) {
             return new String[0];

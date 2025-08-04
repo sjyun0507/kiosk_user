@@ -23,7 +23,7 @@ public class UserService {
         if (user == null) {
             user = new User();
             user.setPhone(phone);
-            user.setPoints(0L);
+            user.setPoints(100L);
             user = userRepository.save(user);
         }
 

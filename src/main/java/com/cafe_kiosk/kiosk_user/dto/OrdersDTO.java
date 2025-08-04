@@ -18,7 +18,7 @@ public class OrdersDTO {
     private String phone;
     private LocalDateTime orderTime;
     private Long totalAmount;
-    private OrderStatus orderStatus;
+    private OrderStatus status;
     private Long usedPoint = 0L;
     private Long earnedPoint = 0L;
     private String orderMethod;
@@ -33,7 +33,7 @@ public class OrdersDTO {
                 .phone(orders.getPhone())
                 .orderTime(orders.getOrderTime())
                 .totalAmount(orders.getTotalAmount())
-                .orderStatus(orders.getStatus())
+                .status(orders.getStatus())
                 .usedPoint(orders.getUsedPoint())
                 .earnedPoint(orders.getEarnedPoint())
                 .orderMethod(orders.getOrderMethod())
@@ -49,7 +49,7 @@ public class OrdersDTO {
                 .phone(phone)
                 .orderTime(orderTime)
                 .totalAmount(totalAmount)
-                .status(orderStatus)
+                .status(status)
                 .usedPoint(usedPoint)
                 .earnedPoint(earnedPoint)
                 .orderMethod(orderMethod)

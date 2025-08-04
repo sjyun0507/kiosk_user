@@ -24,7 +24,7 @@ public class MenuController {
     private final MenuService menuService;
     private final CategoryService categoryService;
     @Operation(summary = "카테고리")
-    @GetMapping(value = "/")
+    @GetMapping(value = "/category")
     public List<CategoryDTO> getCategories() {
         log.info("getCategories");
         List<CategoryDTO> categories = categoryService.getAllCategories();
@@ -38,7 +38,7 @@ public class MenuController {
 //
 //        return menuDTOS;
 //    }
-
+    @Operation(summary = "모든 메뉴")
     @GetMapping(value="/all")
     public Map<String, Object> findAll() {
         log.info("findAll");

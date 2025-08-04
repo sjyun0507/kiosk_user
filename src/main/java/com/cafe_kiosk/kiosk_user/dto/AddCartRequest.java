@@ -11,6 +11,7 @@ public class AddCartRequest {
     private String[] options;  // 옵션 ID 배열 (nullable)
     private Long quantity;      // 수량
     public String sessionId; //추가
+    public String itemId;
 
 
 //    // 콤마로 구분된 옵션 문자열을 배열로 설정

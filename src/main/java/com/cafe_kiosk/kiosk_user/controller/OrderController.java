@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Log4j2
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/order")
 @CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class OrderController {
@@ -27,7 +27,7 @@ public class OrderController {
     private final OrderService orderService;
 
 
-    @PostMapping("/order")
+    @PostMapping("/")
     public ResponseEntity<Map<String,Object>> createOrder(@RequestBody OrdersDTO ordersDTO){
         String orderId = UUID.randomUUID().toString();// toss 전용 주문번호 생성
         // 1) 전화번호로 유저 조회 또는 생성
@@ -53,7 +53,7 @@ public class OrderController {
 //        userDTO.setPoints(userDTO.getPoints() + earnedPoint);
         userService.userSave(userDTO);
 
-        ordersDTO.setOrderStatus(OrderStatus.WAITING);
+        ordersDTO.setStatus(OrderStatus.WAITING);
         orderService.orderSave(ordersDTO);
 
         Map<String,Object> response = new HashMap<>();
@@ -63,7 +63,7 @@ public class OrderController {
         System.out.println("DTO 값: " + ordersDTO);
         System.out.println("DTO 값: " + userDTO);
         System.out.println("earnedPoint 계산 값: " + (ordersDTO.getTotalAmount() * 0.05));
-        System.out.println("orderStatus: " + ordersDTO.getOrderStatus());
+        System.out.println("orderStatus: " + ordersDTO.getStatus());
 
         return ResponseEntity.ok(response);
     }
@@ -73,7 +73,7 @@ public class OrderController {
 //        UserDTO userDTO = mainService.getUser(phone);
 //        Integer points = Math.toIntExact(userDTO.getPoints());
 //        return ResponseEntity.ok(points);      }
-    @GetMapping("/user/points")
+    @GetMapping("/points")
     public ResponseEntity<Map<String, Object>> getUserPoints(@RequestParam String phone) {
         UserDTO userDTO = userService.findOrCreateUserByPhone(phone);
 
