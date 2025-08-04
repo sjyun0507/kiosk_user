@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmsService {
     private DefaultMessageService messageService;
-
     @Value("${com.tjfgusdh.nurigo.apiKey}")
     private String apiKey;
     @Value("${com.tjfgusdh.nurigo.apiSecretKey}")
