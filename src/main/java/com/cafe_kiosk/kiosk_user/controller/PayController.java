@@ -139,6 +139,8 @@ public class PayController {
             String text = ("주문이 완료되었습니다 \n주문번호: " + orderId +"\n주문금액: " + amount +"업체명: BEANS COFFEE"+"\n주문내역: " + menuList);
 //        smsService.sendSms(phone, text);
             cartService.clearCart();
+        }  else {
+            orderService.modifyOrderStatus(orderId, OrderStatus.CANCELLED);
         }
 
         // 전화번호로 유저 조회 또는 생성
