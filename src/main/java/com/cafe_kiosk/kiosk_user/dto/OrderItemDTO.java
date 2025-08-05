@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,7 +18,8 @@ public class OrderItemDTO {
     private OrdersDTO order;
     private MenuDTO menu;
     private MenuOptionDTO option;
-    private Long quantity = 1L;
+    private String options;
+    private Long quantity;
     private Long price;
 
     // Entity → DTO
@@ -26,6 +29,7 @@ public class OrderItemDTO {
                 .order(OrdersDTO.entityToDto(orderItem.getOrder()))
                 .menu(MenuDTO.entityToDto(orderItem.getMenu()))
                 .option(orderItem.getOption() != null ? MenuOptionDTO.entityToDto(orderItem.getOption()) : null)
+                .options(orderItem.getOptions())
                 .quantity(orderItem.getQuantity())
                 .price(orderItem.getPrice())
                 .build();
@@ -38,6 +42,7 @@ public class OrderItemDTO {
                 .order(order.dtoToEntity())
                 .menu(menu.dtoToEntity())
                 .option(option != null ? option.dtoToEntity() : null)
+                .options(options)
                 .quantity(quantity)
                 .price(price)
                 .build();

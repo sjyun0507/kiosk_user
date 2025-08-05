@@ -68,9 +68,10 @@ public class OrderService {
         return OrdersDTO.entityToDto(order);
     }
 
-    public void orderSave(OrdersDTO ordersDTO) {
+    public Orders orderSave(OrdersDTO ordersDTO) {
         Orders orders = ordersDTO.dtoToEntity();
         orderRepository.save(orders);
+        return orders;
     }
 
     public String getPhoneByOrderId(Long orderId) {

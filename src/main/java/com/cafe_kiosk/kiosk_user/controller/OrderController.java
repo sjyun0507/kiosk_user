@@ -1,9 +1,15 @@
 package com.cafe_kiosk.kiosk_user.controller;
 
+import com.cafe_kiosk.kiosk_user.domain.OrderItem;
 import com.cafe_kiosk.kiosk_user.domain.OrderStatus;
+import com.cafe_kiosk.kiosk_user.domain.Orders;
+import com.cafe_kiosk.kiosk_user.dto.CartDTO;
+import com.cafe_kiosk.kiosk_user.dto.OrderItemDTO;
 import com.cafe_kiosk.kiosk_user.dto.OrdersDTO;
 import com.cafe_kiosk.kiosk_user.dto.UserDTO;
+import com.cafe_kiosk.kiosk_user.repository.OrderItemRepository;
 import com.cafe_kiosk.kiosk_user.repository.OrderRepository;
+import com.cafe_kiosk.kiosk_user.service.CartService;
 import com.cafe_kiosk.kiosk_user.service.MenuService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
 import com.cafe_kiosk.kiosk_user.service.UserService;
@@ -13,9 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
@@ -25,6 +30,9 @@ import java.util.UUID;
 public class OrderController {
     private final UserService userService;
     private final OrderService orderService;
+    private final CartService cartService;
+    private final OrderItemRepository orderItemRepository;
+    private final MenuService menuService;
 
 
     @PostMapping("/")
@@ -50,11 +58,38 @@ public class OrderController {
 //                .earnedPoint(ordersDTO.getEarnedPoint())
 //                .build();
 
+        List<CartDTO> carts = cartService.getCartItems();
+        List<OrderItemDTO> orderItems = new ArrayList<>();
+
+
+
 //        userDTO.setPoints(userDTO.getPoints() + earnedPoint);
         userService.userSave(userDTO);
 
         ordersDTO.setStatus(OrderStatus.WAITING);
-        orderService.orderSave(ordersDTO);
+        Orders savedOrder = orderService.orderSave(ordersDTO); // 엔티티 저장 및 반환
+
+        carts.forEach(cart -> {
+            OrderItemDTO item = new OrderItemDTO();
+            item.setOrder(OrdersDTO.entityToDto(savedOrder)); // 엔티티 넣기! DTO 아님!
+            item.setQuantity(cart.getQuantity());
+            item.setMenu(cart.getMenu());
+            item.setOption(cart.getOption());
+            String[] intOptions = cart.getOptions();
+            String a;
+            if (intOptions == null || intOptions.length == 0) {
+                a = "";
+            } else {
+                a = String.join(",", intOptions);
+            }
+
+            item.setPrice(savedOrder.getTotalAmount());
+            item.setOptions(a);
+            OrderItem entity = item.dtoToEntity(); // now it's safe
+            orderItemRepository.save(entity);      // DB 저장 OK
+        });
+
+        // 제대로 저장
 
         Map<String,Object> response = new HashMap<>();
         response.put("orderId", orderId);
