@@ -70,15 +70,16 @@ public class MenuService {
             Menu menu = cart.getMenu();
             Long newStock = menu.getStock() - cartDTO.getQuantity();
             menu.setStock(newStock);
-            if(menu.getStock() <= 0) {
+            if (menu.getStock() <= 0) {
                 menu.setIsSoldOut(true);
             }
             menuRepository.save(menu); // DB에 재고 반영
         }
-//        List<MenuDTO> menuDTOS = menuRepository.getMenusInCart(menuId).stream().map(MenuDTO::entityToDto).toList();
-//        menuDTOS.forEach(menuDTO -> {
-//            menuDTO.setStock(menuDTO.getStock() - 1);
-//        });
     }
 
+    public int getMenuStockById(Long menuId) {
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 메뉴입니다."));
+        return menu.getStock().intValue();
+    }
 }

@@ -9,6 +9,7 @@ import com.cafe_kiosk.kiosk_user.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.Map;
 public class MenuController {
     private final MenuService menuService;
     private final CategoryService categoryService;
+
     @Operation(summary = "카테고리")
     @GetMapping(value = "/category")
     public List<CategoryDTO> getCategories() {
@@ -30,14 +32,6 @@ public class MenuController {
         List<CategoryDTO> categories = categoryService.getAllCategories();
         return categories;
     }
-
-//    @Operation(summary = "카테고리 안에 메뉴")
-//    @GetMapping(value = "/{category_id}")
-//    public List<MenuDTO> findByCategory(@PathVariable Long category_id) {
-//        List<MenuDTO> menuDTOS = menuService.getMenusByCategory(category_id);
-//
-//        return menuDTOS;
-//    }
     @Operation(summary = "모든 메뉴")
     @GetMapping(value="/all")
     public Map<String, Object> findAll() {
@@ -52,13 +46,20 @@ public class MenuController {
         return result;
     }
 
-
     @Operation(summary = "메뉴 상세옵션")
     @GetMapping(value = "/{category_id}")
     public List<MenuOptionDTO> getMenuOption(@PathVariable Long category_id) {
         List<MenuOptionDTO> optionDTOS = menuService.getOptions(category_id);
         return optionDTOS;
     }
-
+    // 메뉴 재고 조회 API
+    @GetMapping("/{menuId}/stock")
+    public ResponseEntity<Map<String, Object>> getMenuStock(@PathVariable Long menuId) {
+        int stock = menuService.getMenuStockById(menuId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("menuId", menuId);
+        response.put("stock", stock);
+        return ResponseEntity.ok(response);
+    }
 
 }
