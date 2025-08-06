@@ -17,6 +17,8 @@ public class OrderItemDTO {
     private MenuDTO menu;
     private MenuOptionDTO option;
     private Long quantity = 1L;
+    private String options;
+
     private Long price;
 
     // Entity → DTO
@@ -26,6 +28,7 @@ public class OrderItemDTO {
                 .order(OrdersDTO.entityToDto(orderItem.getOrder()))
                 .menu(MenuDTO.entityToDto(orderItem.getMenu()))
                 .option(orderItem.getOption() != null ? MenuOptionDTO.entityToDto(orderItem.getOption()) : null)
+                .options(orderItem.getOptions())
                 .quantity(orderItem.getQuantity())
                 .price(orderItem.getPrice())
                 .build();
@@ -38,6 +41,7 @@ public class OrderItemDTO {
                 .order(order.dtoToEntity())
                 .menu(menu.dtoToEntity())
                 .option(option != null ? option.dtoToEntity() : null)
+                .options(options)
                 .quantity(quantity)
                 .price(price)
                 .build();
