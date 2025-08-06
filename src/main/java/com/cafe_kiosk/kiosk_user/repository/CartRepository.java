@@ -15,4 +15,6 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     void deleteBySessionId(String sessionId); //장바구니에 담은 sessionId 삭제
 
     void deleteByItemId(String cartItemId);
+
+    Optional<Cart> findByItemId(String cartItemId);
 }

@@ -22,6 +22,7 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final MenuRepository menuRepository;
+
     public void clearCartBySessionId(String sessionId) {
         cartRepository.deleteBySessionId(sessionId);
     }
@@ -63,8 +64,8 @@ public class CartService {
     }
 
     // 7. 장바구니 아이템 수량 변경
-    public void updateCartQuantity(Long cartItemId, Long newQuantity) {
-        Cart cartItem = cartRepository.findById(cartItemId)
+    public void updateCartQuantity(String cartItemId, Long newQuantity) {
+        Cart cartItem = cartRepository.findByItemId((cartItemId))
                 .orElseThrow(() -> new IllegalArgumentException("장바구니 아이템을 찾을 수 없습니다."));
         cartItem.setQuantity(newQuantity);
         cartRepository.save(cartItem);

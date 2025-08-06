@@ -39,11 +39,11 @@ public class CartDTO extends BaseEntityDTO {
     }
 
     // DTO → 엔티티
-    public Cart dtoToEntity(Menu menu) {
+    public Cart dtoToEntity() {
         return Cart.builder()
                 .cartId(cartId)
                 .phone(phone)
-                .menu(menu)
+                .menu(menu.dtoToEntity())
                 .options(Arrays.toString(options))
                 .quantity(quantity)
                 .sessionId(sessionId)

@@ -1,6 +1,8 @@
 package com.cafe_kiosk.kiosk_user.service;
 
+import com.cafe_kiosk.kiosk_user.domain.Cart;
 import com.cafe_kiosk.kiosk_user.domain.Menu;
+import com.cafe_kiosk.kiosk_user.dto.CartDTO;
 import com.cafe_kiosk.kiosk_user.dto.MenuDTO;
 import com.cafe_kiosk.kiosk_user.dto.MenuOptionDTO;
 import com.cafe_kiosk.kiosk_user.repository.MenuOptionRepository;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 public class MenuService {
     private final MenuRepository menuRepository;
     private final MenuOptionRepository menuOptionRepository;
+    private final CartService cartService;
+
     public List<MenuDTO> allMenus() {
         return menuRepository.findAll()
                 .stream()
@@ -56,6 +60,25 @@ public class MenuService {
                 .stream()
                 .map(MenuOptionDTO::entityToDto)
                 .collect(Collectors.toList());
+    }
+
+    // 주문 완료 시 수량 차감
+    public void menuStockMinus() {
+        List<CartDTO> cartDTOS = cartService.getCartItems();
+        for (CartDTO cartDTO : cartDTOS) {
+            Cart cart = cartDTO.dtoToEntity();
+            Menu menu = cart.getMenu();
+            Long newStock = menu.getStock() - cartDTO.getQuantity();
+            menu.setStock(newStock);
+            if(menu.getStock() <= 0) {
+                menu.setIsSoldOut(true);
+            }
+            menuRepository.save(menu); // DB에 재고 반영
+        }
+//        List<MenuDTO> menuDTOS = menuRepository.getMenusInCart(menuId).stream().map(MenuDTO::entityToDto).toList();
+//        menuDTOS.forEach(menuDTO -> {
+//            menuDTO.setStock(menuDTO.getStock() - 1);
+//        });
     }
 
 }

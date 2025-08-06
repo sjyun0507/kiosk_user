@@ -2,14 +2,12 @@ package com.cafe_kiosk.kiosk_user.domain;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "menu")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
