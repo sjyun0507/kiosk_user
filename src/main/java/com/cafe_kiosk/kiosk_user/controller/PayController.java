@@ -141,7 +141,10 @@ public class PayController {
             orderService.modifyOrderStatus(orderId, OrderStatus.CANCELLED);
         }
 
-        // 전화번호로 유저 조회 또는 생성
+
+        // Override the orderId in the response with the actual DB order ID
+        jsonObject.put("orderId", orderId); // 프론트에 보여줄 주문번호
+        jsonObject.put("tossOrderId", tossOrderId); // Toss 트래킹용
 
         return ResponseEntity.status(code).body(jsonObject);
     }
