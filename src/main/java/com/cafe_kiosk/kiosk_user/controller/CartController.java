@@ -1,12 +1,8 @@
 package com.cafe_kiosk.kiosk_user.controller;
 
-import com.cafe_kiosk.kiosk_user.domain.Cart;
-import com.cafe_kiosk.kiosk_user.domain.OrderItem;
 import com.cafe_kiosk.kiosk_user.dto.AddCartRequest;
 import com.cafe_kiosk.kiosk_user.dto.CartDTO;
-import com.cafe_kiosk.kiosk_user.dto.MenuDTO;
-import com.cafe_kiosk.kiosk_user.dto.OrderItemDTO;
-import com.cafe_kiosk.kiosk_user.repository.CartRepository;
+
 import com.cafe_kiosk.kiosk_user.repository.MenuRepository;
 import com.cafe_kiosk.kiosk_user.repository.OrderItemRepository;
 import com.cafe_kiosk.kiosk_user.service.CartService;

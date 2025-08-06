@@ -8,7 +8,6 @@ import com.cafe_kiosk.kiosk_user.dto.OrderItemDTO;
 import com.cafe_kiosk.kiosk_user.dto.OrdersDTO;
 import com.cafe_kiosk.kiosk_user.dto.UserDTO;
 import com.cafe_kiosk.kiosk_user.repository.OrderItemRepository;
-import com.cafe_kiosk.kiosk_user.repository.OrderRepository;
 import com.cafe_kiosk.kiosk_user.service.CartService;
 import com.cafe_kiosk.kiosk_user.service.MenuService;
 import com.cafe_kiosk.kiosk_user.service.OrderService;
@@ -47,23 +46,10 @@ public class OrderController {
         }
         long earnedPoint = (long)(totalAmount * 0.05);
         ordersDTO.setTossOrderId(orderId);
-//        Orders order = Orders.builder()
-//                .tossOrderId(orderId) //toss 에서 받은 orderId를 tossOrderId 필드에 저장
-//                .phone(ordersDTO.getPhone())
-//                .orderTime(ordersDTO.getOrderTime())
-//                .orderStatus(ordersDTO.getOrderStatus())
-//                .usedPoint(ordersDTO.getUsedPoint())
-//                .totalAmount(ordersDTO.getTotalAmount())
-//                .orderMethod(ordersDTO.getOrderMethod())
-//                .earnedPoint(ordersDTO.getEarnedPoint())
-//                .build();
 
         List<CartDTO> carts = cartService.getCartItems();
         List<OrderItemDTO> orderItems = new ArrayList<>();
 
-
-
-//        userDTO.setPoints(userDTO.getPoints() + earnedPoint);
         userService.userSave(userDTO);
 
         ordersDTO.setStatus(OrderStatus.WAITING);
@@ -103,11 +89,7 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-//    @GetMapping("/user/points/{phone}")
-//    public ResponseEntity<Integer> getUserPoint(@PathVariable String phone) {
-//        UserDTO userDTO = mainService.getUser(phone);
-//        Integer points = Math.toIntExact(userDTO.getPoints());
-//        return ResponseEntity.ok(points);      }
+
     @GetMapping("/points")
     public ResponseEntity<Map<String, Object>> getUserPoints(@RequestParam String phone) {
         UserDTO userDTO = userService.findOrCreateUserByPhone(phone);

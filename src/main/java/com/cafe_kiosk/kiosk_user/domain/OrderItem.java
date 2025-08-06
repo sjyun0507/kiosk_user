@@ -30,20 +30,13 @@ public class OrderItem {
     @JoinColumn(name = "optionId")
     private MenuOption option;
 
+    @Column(name = "options", nullable = true)
+    private String options;
+
     @Column(nullable = false)
     private Long quantity = 1L;
 
     @Column(nullable = false)
     private Long price;
 
-    private String options;
-
-
-    public void setOptions(String[] optionsArray) {
-        if (optionsArray == null || optionsArray.length == 0) {
-            this.options = "";
-        } else {
-            this.options = String.join(",", optionsArray);
-        }
-    }
 }

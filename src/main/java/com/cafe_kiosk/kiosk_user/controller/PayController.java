@@ -43,25 +43,6 @@ public class PayController {
     @Value("${com.tjfgusdh.toss.widgetSecretKey}")
     private String widgetSecretKey;
 
-//    @GetMapping("/")
-//    public String index() {
-//        return "redirect:/pay/checkout";
-//
-//    }
-//
-//    @GetMapping("/checkout")
-//    public void checkout(Model model) {
-//        log.info("checkout()...");
-//
-//        //주문 ID 생성
-//        String orderId = orderService.getOrderId();
-//        log.info("orderId: {}", orderId);
-//
-//        //주문 정보 가져오기
-//        String orderDTO = orderService.getOrderId();
-//        model.addAttribute("order", orderDTO);
-//        model.addAttribute("widgetClientKey", widgetClientKey);
-//    }
 
     @PostMapping("/confirm")
     public ResponseEntity<JSONObject> confirm(@RequestBody String jsonBody) throws Exception {
@@ -69,7 +50,7 @@ public class PayController {
         String tossOrderId;
         String amount;
         String paymentKey;
-        Long orderId;
+        Long orderId = null;
 
         List<CartDTO> cartDTOList = cartService.getCartItems();
 
@@ -85,15 +66,32 @@ public class PayController {
 
             // tossOrderId → 내부 DB의 Long 타입 orderId 조회
             orderId = orderService.getOrderIdByTossOrderId(tossOrderId);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
 
-        if (orderService.getOrder(orderId).getTotalAmount() != Integer.parseInt(amount)) {
+            if (orderId == null) {
+                JSONObject response = new JSONObject();
+                response.put("message", "존재하지 않는 주문번호입니다.");
+                return ResponseEntity.status(400).body(response);
+            }
+
+            int intAmount;
+            try {
+                intAmount = Integer.parseInt(amount);
+            } catch (NumberFormatException e) {
+                JSONObject response = new JSONObject();
+                response.put("message", "결제 금액이 올바르지 않습니다.");
+                return ResponseEntity.status(400).body(response);
+            }
+            if (orderService.getOrder(orderId).getTotalAmount() != Integer.parseInt(amount)) {
+                JSONObject response = new JSONObject();
+                response.put("message", "결제 금액 위조");
+                return ResponseEntity.status(400).body(response);
+            }
+        } catch (ParseException e) {
             JSONObject response = new JSONObject();
-            response.put("message", "결제 금액 위조");
+            response.put("message", "잘못된 요청 형식");
             return ResponseEntity.status(400).body(response);
         }
+
         String phone = orderService.getPhoneByOrderId(orderId);
 
         JSONObject obj = new JSONObject();
