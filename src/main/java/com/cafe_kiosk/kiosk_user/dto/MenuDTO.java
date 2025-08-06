@@ -6,8 +6,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -28,7 +26,6 @@ public class MenuDTO {
         return MenuDTO.builder()
                 .menuId(menu.getMenuId())
                 .category(CategoryDTO.entityToDto(menu.getCategory())) // Category → CategoryDTO
-                .createdAt(menu.getCreatedAt())
                 .name(menu.getName())
                 .price(menu.getPrice())
                 .imageUrl(menu.getImageUrl())

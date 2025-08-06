@@ -132,7 +132,7 @@ public class PayController {
             Long earnedPoint = orderService.getOrder(orderId).getEarnedPoint();
             userDTO.setPoints(userDTO.getPoints() + earnedPoint-usedPoints);
             userService.userSave(userDTO);
-
+            menuService.menuStockMinus();
             log.info("주문완료 승인후 테스트");
             String text = ("주문이 완료되었습니다 \n주문번호: " + orderId +"\n주문금액: " + amount +"업체명: BEANS COFFEE"+"\n주문내역: " + menuList);
 //        smsService.sendSms(phone, text);
@@ -141,7 +141,10 @@ public class PayController {
             orderService.modifyOrderStatus(orderId, OrderStatus.CANCELLED);
         }
 
-        // 전화번호로 유저 조회 또는 생성
+
+        // Override the orderId in the response with the actual DB order ID
+        jsonObject.put("orderId", orderId); // 프론트에 보여줄 주문번호
+        jsonObject.put("tossOrderId", tossOrderId); // Toss 트래킹용
 
         return ResponseEntity.status(code).body(jsonObject);
     }
