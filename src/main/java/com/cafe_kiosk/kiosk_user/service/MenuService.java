@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -56,4 +57,5 @@ public class MenuService {
                 .map(MenuOptionDTO::entityToDto)
                 .collect(Collectors.toList());
     }
+
 }

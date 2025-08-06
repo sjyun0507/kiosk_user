@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -30,22 +32,23 @@ public class CartDTO extends BaseEntityDTO {
                 .sessionId(cart.getSessionId())
                 .phone(cart.getPhone())
                 .menu(MenuDTO.entityToDto(cart.getMenu())) // Menu 엔티티 → MenuDTO
-                .option(cart.getOption() != null ? MenuOptionDTO.entityToDto(cart.getOption()) : null)
+                .options(cart.getOptions())
                 .quantity(cart.getQuantity())
                 .itemId(cart.getItemId())
                 .build();
     }
 
     // DTO → 엔티티
-    public Cart dtoToEntity(Menu menu, MenuOption option) {
+    public Cart dtoToEntity(Menu menu) {
         return Cart.builder()
                 .cartId(cartId)
                 .phone(phone)
                 .menu(menu)
-                .option(option)
+                .options(Arrays.toString(options))
                 .quantity(quantity)
                 .sessionId(sessionId)
                 .itemId(itemId)
                 .build();
     }
 }
+

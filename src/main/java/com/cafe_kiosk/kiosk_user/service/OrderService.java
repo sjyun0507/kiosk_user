@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Log4j2
@@ -68,9 +67,10 @@ public class OrderService {
         return OrdersDTO.entityToDto(order);
     }
 
-    public void orderSave(OrdersDTO ordersDTO) {
+    public Orders orderSave(OrdersDTO ordersDTO) {
         Orders orders = ordersDTO.dtoToEntity();
         orderRepository.save(orders);
+        return orders;
     }
 
     public String getPhoneByOrderId(Long orderId) {
