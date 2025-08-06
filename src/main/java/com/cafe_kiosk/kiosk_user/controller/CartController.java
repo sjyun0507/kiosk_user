@@ -1,10 +1,8 @@
 package com.cafe_kiosk.kiosk_user.controller;
 
-import com.cafe_kiosk.kiosk_user.domain.Menu;
 import com.cafe_kiosk.kiosk_user.dto.AddCartRequest;
 import com.cafe_kiosk.kiosk_user.dto.CartDTO;
 
-import com.cafe_kiosk.kiosk_user.dto.MenuDTO;
 import com.cafe_kiosk.kiosk_user.repository.MenuRepository;
 import com.cafe_kiosk.kiosk_user.repository.OrderItemRepository;
 import com.cafe_kiosk.kiosk_user.service.CartService;
@@ -16,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @Log4j2
 @RestController
