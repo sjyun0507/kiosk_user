@@ -51,7 +51,8 @@
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
 - 타이머 설정 : 2분 뒤 주문 유무 확인
 <img width="500" alt="Image" src="https://github.com/user-attachments/assets/16eabdc7-ca60-43c0-985d-ffcd6731d42a" />
-<img width="500" height="916" alt="Image" src="https://github.com/user-attachments/assets/69c68b34-0d2a-4d29-9cd1-2982779249b2" />
+
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/2cf5e055-0aea-47a9-8832-cebe39b6dc71" />
 
 ### 주문 및 결제
 - 결제 기능 (토스 연동)
