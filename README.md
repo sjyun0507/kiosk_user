@@ -6,7 +6,7 @@
 
 ## 📸 Preview
 
-<img src="https://your-preview-image-url" width="700"/>
+<img width="1000" alt="Image" src="https://github.com/user-attachments/assets/899f2687-64d5-4a2e-b519-bb0bb056dd5e" />
 
 <br />
 
