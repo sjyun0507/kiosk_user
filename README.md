@@ -50,10 +50,10 @@
 - 옵션 선택 및 장바구니 담기
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
 - 타이머 설정 : 2분 뒤 주문 유무 확인
-  
-<img width="500" alt="키오스크" src="https://github.com/user-attachments/assets/3953ef4f-9607-4c4f-8f5d-971b5c64226d" />
 
-<img width="500"  alt="옵션창" src="https://github.com/user-attachments/assets/0df41af8-a2b8-4758-bf36-5108feea4331" />
+<img width="500"  alt="옵션창1" src="https://github.com/user-attachments/assets/0df41af8-a2b8-4758-bf36-5108feea4331" />
+
+<img width="500"  alt="옵션창2" src="https://github.com/user-attachments/assets/38932f38-9b4f-4ac5-b79e-baf063c1b481" />
 
 <img width="500" alt="신메뉴" src="https://github.com/user-attachments/assets/d95640bc-4a88-484b-ab15-dc4b070b6e12" />
 
@@ -71,9 +71,9 @@
 - 결제 성공 화면
 - 금액, 주문번호, 주문날짜 확인 후 초기화면으로 이동
 
-<img width="888" height="890" alt="카카오페이" src="https://github.com/user-attachments/assets/99b2f6c5-82d9-4e56-abe0-945836344c3e" />
+<img width="500" alt="카카오페이" src="https://github.com/user-attachments/assets/99b2f6c5-82d9-4e56-abe0-945836344c3e" />
 
-<img width="888" height="890" alt="결제완료 " src="https://github.com/user-attachments/assets/a65d9415-5a39-4d02-a131-3ebb97f5776f" />
+<img width="500" alt="결제완료 " src="https://github.com/user-attachments/assets/a65d9415-5a39-4d02-a131-3ebb97f5776f" />
 
 <br />
 
