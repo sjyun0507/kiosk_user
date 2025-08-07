@@ -26,7 +26,6 @@
 
 ![cafe Kiosk](https://github.com/user-attachments/assets/d67d104d-82b1-4a33-8009-1868ddc295f8)
 
-![Cafe Kiosk ](https://github.com/user-attachments/assets/2008a4e9-3ff2-4e7d-b414-21edcb07fef7)
 
 <br />
 
@@ -42,13 +41,25 @@
 
 ## 🚀 주요 기능
 
-### 사용자
+### 인트로 화면
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/c905818d-520f-4edb-9ac9-2dbacd54d862" />
+
+### 메인 키오스크 화면
 - 메뉴 조회 및 선택
 - 옵션 선택 및 장바구니 담기
-- 재고 기반 주문 제한
+- 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
+- 타이머 설정
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/16eabdc7-ca60-43c0-985d-ffcd6731d42a" />
+
+### 주문 및 결제
 - 결제 기능 (토스 연동)
 - 포인트 적립 및 사용
-- 주문 내역 확인
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/530dfb64-566a-4f62-8f7d-419e8b096ec1" />
+
+### 주문 내역 확인
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/c708ebf6-27d2-48b5-b345-9d035f62ab36" />
+
+
 
 <br />
 
