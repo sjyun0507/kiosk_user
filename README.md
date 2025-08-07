@@ -23,7 +23,8 @@
 
 ## 📸 Preview
 <p>직관적인 UI와 실제 키오스크 동작을 모방한 커피 주문 웹앱입니다. 반응형 UI 적용으로 다양한 디바이스 대응가능합니다.</p>
-![afe Kiosk](https://github.com/user-attachments/assets/d67d104d-82b1-4a33-8009-1868ddc295f8)
+
+![cafe Kiosk](https://github.com/user-attachments/assets/d67d104d-82b1-4a33-8009-1868ddc295f8)
 
 ![Cafe Kiosk ](https://github.com/user-attachments/assets/2008a4e9-3ff2-4e7d-b414-21edcb07fef7)
 
