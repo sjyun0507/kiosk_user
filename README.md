@@ -43,28 +43,37 @@
 
 ### 초기 화면
 - 버튼 클릭 시 메인 화면으로 이동
-<img width="1000" height="942" alt="Image" src="https://github.com/user-attachments/assets/f2488cb8-4c12-452d-a782-fc5634161805" />
+<img width="500" alt="초기화면" src="https://github.com/user-attachments/assets/1376e8b0-7dcd-4ee5-8862-faaab8828703" />
 
 ### 메인 키오스크 화면
 - 메뉴 조회 및 선택
 - 옵션 선택 및 장바구니 담기
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
 - 타이머 설정 : 2분 뒤 주문 유무 확인
-<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/13c2768d-d581-4ed8-afa8-b6082344a4da" />
+  
+<img width="500" alt="키오스크" src="https://github.com/user-attachments/assets/3953ef4f-9607-4c4f-8f5d-971b5c64226d" />
 
-<img width="1000" height="942" alt="Image" src="https://github.com/user-attachments/assets/83d917c7-53de-4f9c-86e0-45eb42bf9f57" />
+<img width="500"  alt="옵션창" src="https://github.com/user-attachments/assets/0df41af8-a2b8-4758-bf36-5108feea4331" />
 
+<img width="500" alt="신메뉴" src="https://github.com/user-attachments/assets/d95640bc-4a88-484b-ab15-dc4b070b6e12" />
+
+<img width="500"  alt="타이머" src="https://github.com/user-attachments/assets/ed384d4d-fcd2-4e92-99b0-bc09478b83f8" />
 
 ### 주문 및 결제
 - 결제 기능 (토스 연동)
 - 포인트 적립 및 사용
-<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/8ef236a7-a412-4e0e-8fc9-9f67f35754eb" />
-<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/f7156286-fb8d-411f-8020-6330bdea2a3b" />
+
+<img width="500"  alt="포인트" src="https://github.com/user-attachments/assets/b561c492-8a17-405d-b48c-b109d309553a" />
+
+<img width="500" alt="결제" src="https://github.com/user-attachments/assets/ac21b582-1439-4e84-a985-367c4b3b28e6" />
 
 ### 주문 내역 확인
 - 결제 성공 화면
 - 금액, 주문번호, 주문날짜 확인 후 초기화면으로 이동
-<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/b353d87d-04e2-4e70-aab6-365042d59e97" />
+
+<img width="888" height="890" alt="카카오페이" src="https://github.com/user-attachments/assets/99b2f6c5-82d9-4e56-abe0-945836344c3e" />
+
+<img width="888" height="890" alt="결제완료 " src="https://github.com/user-attachments/assets/a65d9415-5a39-4d02-a131-3ebb97f5776f" />
 
 <br />
 
