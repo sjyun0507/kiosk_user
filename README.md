@@ -51,9 +51,9 @@
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
 - 타이머 설정 : 2분 뒤 주문 유무 확인
 
-<img width="500"  alt="옵션창1" src="https://github.com/user-attachments/assets/0df41af8-a2b8-4758-bf36-5108feea4331" />
+<img width="500" alt="커피옵션" src="https://github.com/user-attachments/assets/41f6bf3f-bf90-4cdd-8008-e3298fdcd265" />
 
-<img width="500"  alt="옵션창2" src="https://github.com/user-attachments/assets/38932f38-9b4f-4ac5-b79e-baf063c1b481" />
+<img width="500" alt="옵션창2" src="https://github.com/user-attachments/assets/38932f38-9b4f-4ac5-b79e-baf063c1b481" />
 
 <img width="500" alt="신메뉴" src="https://github.com/user-attachments/assets/d95640bc-4a88-484b-ab15-dc4b070b6e12" />
 
