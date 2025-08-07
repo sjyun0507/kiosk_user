@@ -46,6 +46,7 @@
 - 커피, 버블티, 스무디, 에이드 등 음료에 따라 다른 옵션 추가
 <img width="650"  alt="옵션창2" src="https://github.com/user-attachments/assets/c6e55d57-7986-4099-a517-829b40eac446" />
 
+- 관리자가 30일이내 등록한 메뉴는 신메뉴로 분류 
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
 <img width="650"  alt="신메뉴" src="https://github.com/user-attachments/assets/d95640bc-4a88-484b-ab15-dc4b070b6e12" />
 
