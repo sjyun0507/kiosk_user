@@ -34,38 +34,51 @@
 ## 🚀 주요 기능
 
 ### 초기 화면
-- 버튼 클릭 시 메인 화면으로 이동
 
-<img width="650" alt="초기화면" src="https://github.com/user-attachments/assets/1376e8b0-7dcd-4ee5-8862-faaab8828703" />
+<p>- 버튼 클릭 시 메인 화면으로 이동</p>
+<img width="1000"  alt="초기화면_wide" src="https://github.com/user-attachments/assets/435f02c8-52c1-4935-89e4-a89415eb4fba" />
+
 
 ### 메인 키오스크 화면
-- 메뉴 조회 및 선택
+
+
+<p>- 메뉴 조회 및 선택</p>
+<img width="550" alt="키오스크" src="https://github.com/user-attachments/assets/3953ef4f-9607-4c4f-8f5d-971b5c64226d" />
+
 - 옵션 선택 및 장바구니 담기
-<img width="650"  alt="커피옵션" src="https://github.com/user-attachments/assets/c4def2e6-9d7d-4a3a-ad5e-f7853e03ff6d" />
+  
+<img width="550"  alt="커피옵션" src="https://github.com/user-attachments/assets/c4def2e6-9d7d-4a3a-ad5e-f7853e03ff6d" />
 
 - 커피, 버블티, 스무디, 에이드 등 음료에 따라 다른 옵션 추가
-<img width="650"  alt="옵션창2" src="https://github.com/user-attachments/assets/c6e55d57-7986-4099-a517-829b40eac446" />
+  
+<img width="550"  alt="옵션창2" src="https://github.com/user-attachments/assets/c6e55d57-7986-4099-a517-829b40eac446" />
 
 - 관리자가 30일이내 등록한 메뉴는 신메뉴로 분류 
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
-<img width="650"  alt="신메뉴" src="https://github.com/user-attachments/assets/d95640bc-4a88-484b-ab15-dc4b070b6e12" />
+  
+<img width="550"  alt="신메뉴" src="https://github.com/user-attachments/assets/d95640bc-4a88-484b-ab15-dc4b070b6e12" />
 
 - 타이머 설정 : 제한 시간 2분 뒤 주문 결제를 하지 않는 경우 주문 유무 확인
-<img width="650"  alt="타이머" src="https://github.com/user-attachments/assets/ed384d4d-fcd2-4e92-99b0-bc09478b83f8" />
+  
+<img width="550"  alt="타이머" src="https://github.com/user-attachments/assets/ed384d4d-fcd2-4e92-99b0-bc09478b83f8" />
 
 ### 주문 및 결제
 
 - 휴대폰 번호 입력으로 포인트 적립 및 사용
-<img width="650" alt="포인트" src="https://github.com/user-attachments/assets/b561c492-8a17-405d-b48c-b109d309553a" />
+  
+<img width="550" alt="포인트" src="https://github.com/user-attachments/assets/b561c492-8a17-405d-b48c-b109d309553a" />
 
 - 결제 기능 (토스 연동)
-<img width="650" alt="결제" src="https://github.com/user-attachments/assets/ac21b582-1439-4e84-a985-367c4b3b28e6" />
+  
+<img width="550" alt="결제" src="https://github.com/user-attachments/assets/ac21b582-1439-4e84-a985-367c4b3b28e6" />
 
 
 
 ### 주문 내역 확인
+
 - 결제 성공 화면 : 금액, 주문번호, 주문날짜 확인 후 초기화면으로 이동
-<img width="650"  alt="결제완료 " src="https://github.com/user-attachments/assets/a65d9415-5a39-4d02-a131-3ebb97f5776f" />
+  
+<img width="550"  alt="결제완료 " src="https://github.com/user-attachments/assets/a65d9415-5a39-4d02-a131-3ebb97f5776f" />
 
 <br />
 
