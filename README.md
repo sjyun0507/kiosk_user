@@ -41,15 +41,17 @@
 
 ## 🚀 주요 기능
 
-### 인트로 화면
+### 초기 화면
+- 버튼 클릭 시 메인 화면으로 이동
 <img width="500" alt="Image" src="https://github.com/user-attachments/assets/c905818d-520f-4edb-9ac9-2dbacd54d862" />
 
 ### 메인 키오스크 화면
 - 메뉴 조회 및 선택
 - 옵션 선택 및 장바구니 담기
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
-- 타이머 설정
+- 타이머 설정 : 2분 뒤 주문 유무 확인
 <img width="500" alt="Image" src="https://github.com/user-attachments/assets/16eabdc7-ca60-43c0-985d-ffcd6731d42a" />
+<img width="948" height="916" alt="Image" src="https://github.com/user-attachments/assets/69c68b34-0d2a-4d29-9cd1-2982779249b2" />
 
 ### 주문 및 결제
 - 결제 기능 (토스 연동)
@@ -57,8 +59,9 @@
 <img width="500" alt="Image" src="https://github.com/user-attachments/assets/530dfb64-566a-4f62-8f7d-419e8b096ec1" />
 
 ### 주문 내역 확인
+- 결제 성공 화면
+- 금액, 주문번호, 주문날짜 확인 후 초기화면으로 이동
 <img width="500" alt="Image" src="https://github.com/user-attachments/assets/c708ebf6-27d2-48b5-b345-9d035f62ab36" />
-
 
 
 <br />
