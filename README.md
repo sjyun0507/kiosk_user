@@ -56,6 +56,7 @@
 
 - 휴대폰 번호 입력으로 포인트 적립 및 사용
 <img width="650" alt="포인트" src="https://github.com/user-attachments/assets/b561c492-8a17-405d-b48c-b109d309553a" />
+
 - 결제 기능 (토스 연동)
 <img width="650" alt="결제" src="https://github.com/user-attachments/assets/ac21b582-1439-4e84-a985-367c4b3b28e6" />
 
