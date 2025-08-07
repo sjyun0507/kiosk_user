@@ -7,22 +7,7 @@
 ## 📸 Preview
 
 ![Cafe Kiosk ](https://github.com/user-attachments/assets/2008a4e9-3ff2-4e7d-b414-21edcb07fef7)
-<p>직관적인 반응형 UI와 실제 키오스크 동작을 모방한 커피 주문 웹앱입니다. </p>
-
-
-### 🖥️ Kiosk 인트로 화면
-<img width="400" alt="Image" src="https://github.com/user-attachments/assets/c905818d-520f-4edb-9ac9-2dbacd54d862" />
-
-### 🖥️ Kiosk 메인 화면 (메뉴담기->장바구니)
-<img width="400" alt="Image" src="https://github.com/user-attachments/assets/16eabdc7-ca60-43c0-985d-ffcd6731d42a" />
-
-### 🖥️ Kiosk 결제 화면
-<img width="400" alt="Image" src="https://github.com/user-attachments/assets/530dfb64-566a-4f62-8f7d-419e8b096ec1" />
-
-### 🖥️ Kiosk 영수증 화면 (결제완료 후)
-<img width="400" alt="Image" src="https://github.com/user-attachments/assets/c708ebf6-27d2-48b5-b345-9d035f62ab36" />
-
-<br />
+<p>직관적인 UI와 실제 키오스크 동작을 모방한 커피 주문 웹앱입니다. </p>
 
 ## 🛠️ Tech Stack
 
