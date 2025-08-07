@@ -43,27 +43,28 @@
 
 ### 초기 화면
 - 버튼 클릭 시 메인 화면으로 이동
-<img width="500" alt="Image" src="https://github.com/user-attachments/assets/c905818d-520f-4edb-9ac9-2dbacd54d862" />
+<img width="1000" height="942" alt="Image" src="https://github.com/user-attachments/assets/f2488cb8-4c12-452d-a782-fc5634161805" />
 
 ### 메인 키오스크 화면
 - 메뉴 조회 및 선택
 - 옵션 선택 및 장바구니 담기
 - 장바구니 수량 변경 및 삭제, 재고 기반 주문 제한
 - 타이머 설정 : 2분 뒤 주문 유무 확인
-<img width="500" alt="Image" src="https://github.com/user-attachments/assets/16eabdc7-ca60-43c0-985d-ffcd6731d42a" />
+<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/13c2768d-d581-4ed8-afa8-b6082344a4da" />
 
-<img width="500" alt="Image" src="https://github.com/user-attachments/assets/2cf5e055-0aea-47a9-8832-cebe39b6dc71" />
+<img width="1000" height="942" alt="Image" src="https://github.com/user-attachments/assets/83d917c7-53de-4f9c-86e0-45eb42bf9f57" />
+
 
 ### 주문 및 결제
 - 결제 기능 (토스 연동)
 - 포인트 적립 및 사용
-<img width="500" alt="Image" src="https://github.com/user-attachments/assets/530dfb64-566a-4f62-8f7d-419e8b096ec1" />
+<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/8ef236a7-a412-4e0e-8fc9-9f67f35754eb" />
+<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/f7156286-fb8d-411f-8020-6330bdea2a3b" />
 
 ### 주문 내역 확인
 - 결제 성공 화면
 - 금액, 주문번호, 주문날짜 확인 후 초기화면으로 이동
-<img width="500" alt="Image" src="https://github.com/user-attachments/assets/c708ebf6-27d2-48b5-b345-9d035f62ab36" />
-
+<img width="500" height="942" alt="Image" src="https://github.com/user-attachments/assets/b353d87d-04e2-4e70-aab6-365042d59e97" />
 
 <br />
 
