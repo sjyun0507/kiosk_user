@@ -39,3 +39,8 @@
 
 <br />
 
+### 📽️ 시연 영상
+
+<p align="center">
+  <img src="https://your-image-url.gif" width="700" />
+</p>
