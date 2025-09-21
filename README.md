@@ -6,6 +6,11 @@
 
 ---
 
+## 데모 (Live Demo)
+👉 [Beans Coffee 바로가기](http://175.45.200.254:8080/)
+
+---
+
 ## 프로젝트 개요
 
 - 프로젝트명 : BEANS COFFEE KIOSK
@@ -97,11 +102,6 @@
 <p>직관적인 UI와 실제 키오스크 동작을 모방한 커피 주문 웹앱입니다. 반응형 UI 적용으로 다양한 디바이스 대응가능합니다.</p>
 
 ![cafe Kiosk](https://github.com/user-attachments/assets/d67d104d-82b1-4a33-8009-1868ddc295f8)
-
----
-
-## 데모 (Live Demo)
-👉 [Live Demo](http://175.45.200.254:8080/)
 
 ---
 
